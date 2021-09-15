@@ -8,7 +8,7 @@ export default function App() {
     <BrowserRouter>
       <Switch>
         <PublicRoute restricted={false} component={Home} path="/" exact />
-        {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
+        <PrivateRoute component={Dashboard} path="/dashboard" exact />
       </Switch>
     </BrowserRouter>
   );
