@@ -3,11 +3,15 @@ import "./index.css";
 import PublicRoute from "./routes/publicRoutes";
 import PrivateRoute from "./routes/privateRoutes";
 
+// PAGES
+import Login from './pages/Auth/Login'
+
 export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <PublicRoute restricted={false} component={Home} path="/home" exact />
+        <PublicRoute restricted={false} component={Home} path="/" exact />
+        <PublicRoute restricted={false} component={Login} path="/login" exact />
         <PrivateRoute component={Dashboard} path="/dashboard" exact />
       </Switch>
     </BrowserRouter>
