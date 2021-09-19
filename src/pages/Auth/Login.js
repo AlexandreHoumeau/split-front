@@ -3,78 +3,79 @@ import TeachingImage from "../../assets/images/teaching.jpg";
 
 const Login = () => {
   return (
-    <div className="min-h-screen flex justify-between bg-gray-50">
-      <div className="w-full space-y-8">
-        <div className="m-10">
-          <span className="text-yellow-600 font-semibold">Retour</span>
-          <h2 className="text-4xl font-extrabold text-gray-900 mt-2">
-            Connexion
-          </h2>
-        </div>
-        <form>
-          <div className="justify-center flex">
-            <div className="w-3/4 lg:w-2/4">
-              <div className="mb-5 mt-10 ">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="rounded w-full px-3 py-5 border border-purple-500 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email"
-                />
-              </div>
-              <div className="">
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="rounded px-3 py-5 w-full border border-purple-500 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Mot de passe"
-                />
-              </div>
-              <div className="mt-10 flex justify-center">
-                <button
-                  type="submit"
-                  className="py-4 px-12 text-lg font-bold rounded-full text-white bg-purple-400 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  CONNEXION
-                </button>
-              </div>
-              <div className="mt-8">
-                <p className="text-gray-700">
-                  Pas de compte ?{" "}
-                  <a href="/#" className="text-indigo-500 underline">
-                    Inscris toi{" "}
-                  </a>
-                </p>
+    <div>
+      <div className="lg:flex">
+        <div className="lg:w-1/2 xl:max-w-screen-sm">
+          <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
+            <div className="cursor-pointer flex items-center">
+              <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">
+                Split
               </div>
             </div>
           </div>
-        </form>
-      </div>
-      <div className="w-full min-h-full bg-red-100">
-        <div className="absolute pt-12 pl-10">
-          <p className="text-white text-7xl font-bold w-4/5 leading-normal">
-            Le reverse mentoring, quand le{" "}
-            <span className="text-indigo-500">Padawn</span> forme le{" "}
-            <span className="text-yellow-500">Jedi</span>
-          </p>
+          <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
+            <h2
+              className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
+                xl:text-bold"
+            >
+              Connexion
+            </h2>
+            <div className="mt-12">
+              <form>
+                <div>
+                  <div className="text-sm font-bold text-gray-700 tracking-wide">
+                    Email
+                  </div>
+                  <input
+                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                    type
+                    placeholder="mike@gmail.com"
+                  />
+                </div>
+                <div className="mt-8">
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm font-bold text-gray-700 tracking-wide">
+                      Mot de passe
+                    </div>
+                    <div>
+                      <a
+                        className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800
+                                    cursor-pointer"
+                      >
+                        Mot de passe oublié?
+                      </a>
+                    </div>
+                  </div>
+                  <input
+                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                    type
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <div className="mt-10">
+                  <button
+                    className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
+                            font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
+                            shadow-lg"
+                  >
+                    Connexion
+                  </button>
+                </div>
+              </form>
+              <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
+                Don't have an account ?{" "}
+                <a className="cursor-pointer text-indigo-600 hover:text-indigo-800">
+                  Sign up
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <img
-          className="object-cover min-h-full"
-          src={TeachingImage}
-          alt="Logo"
-        />
+        <div className="hidden lg:flex items-center justify-center bg-indigo-100 flex-1 h-screen">
+          <div className="max-w-xs transform duration-200 hover:scale-110 cursor-pointer">
+            <image alt="Teaching"  source={TeachingImage} />
+          </div>
+        </div>
       </div>
     </div>
   );
