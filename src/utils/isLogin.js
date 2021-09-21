@@ -1,5 +1,5 @@
 export const isLogin = () => {
-  if (localStorage.getItem('SPLIT_TOKEN')) {
+  if (localStorage.getItem('authToken')) {
       return true;
   }
 

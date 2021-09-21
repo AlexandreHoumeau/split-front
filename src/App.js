@@ -1,20 +1,31 @@
 import { BrowserRouter, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+
 import "./index.css";
 import PublicRoute from "./routes/publicRoutes";
 import PrivateRoute from "./routes/privateRoutes";
 
 // PAGES
-import Login from './pages/Auth/Login'
+import Login from "./pages/Auth/Login";
+import Store from "store";
 
 export default function App() {
+  console.log(Store.getState('Auth'))
   return (
-    <BrowserRouter>
-      <Switch>
-        <PublicRoute restricted={false} component={Home} path="/" exact />
-        <PublicRoute restricted={false} component={Login} path="/login" exact />
-        <PrivateRoute component={Dashboard} path="/dashboard" exact />
-      </Switch>
-    </BrowserRouter>
+    <Provider store={Store}>
+      <BrowserRouter>
+        <Switch>
+          <PublicRoute restricted={false} component={Home} path="/" exact />
+          <PublicRoute
+            restricted={false}
+            component={Login}
+            path="/login"
+            exact
+          />
+          <PrivateRoute component={Dashboard} path="/dashboard" exact />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
