@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { setInformation, setStep } from "actions/register.action";
 
-const Informations = ({ profile, user }) => {
+const Informations = ({ profile, user, setInformation, setStep }) => {
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [lastName, setLastName] = useState(user.lastName || "");
   const [email, setEmail] = useState(user.email || "");
@@ -27,10 +27,11 @@ const Informations = ({ profile, user }) => {
       password: Yup.string().required("Merci de renseigner un mot de passe"),
     }),
     onSubmit: async (values) => {
-      try {
-        await setInformation(values) 
-      } catch (error) {
-        await setStep('location')
+      setInformation(values)
+      if (profile === 'student') {
+        setStep('summary')
+      } else {
+        setStep('sector')
       }
     }
   });
@@ -124,12 +125,12 @@ const Informations = ({ profile, user }) => {
           <div className="mt-10 justify-center flex">
             <button
               className={`${
-                profile === 'student'
-                  ? "bg-primary-500"
-                  : "bg-secondary-500"
-              } text-gray-100 font-gibson p-4 w-1/2 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+                !(formik.isValid && formik.dirty)
+                  ? "bg-primary-300"
+                  : "bg-primary-500"
+              } text-gray-100 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
             >
-              Suivant
+              Connexion
             </button>
           </div>
         </form>
@@ -142,4 +143,4 @@ const mapStateToProps = (state) => ({
   user: state.register,
 });
 
-export default connect(mapStateToProps)(Informations);
+export default connect(mapStateToProps, { setInformation, setStep })(Informations);

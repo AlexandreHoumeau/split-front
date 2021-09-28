@@ -27,7 +27,7 @@ const Profile = ({ setStep, setProfile }) => {
             onClick={() => handleSubmit('student')}
             className={`${
               jedi ? " lg:p-12" : ""
-            } transition-all p-5 cursor-pointer lg:p-10 m-5 bg-primary-500  duration-300 shadow hover:shadow-lg  my-20 rounded-lg`}
+            } transition-all p-5 cursor-pointer lg:p-10 m-5 bg-primary-400  duration-300 shadow hover:shadow-lg  my-20 rounded-lg`}
           >
             <h2
               className={`text-white font-semibold font-gibson text-2xl transition-all duration-300`}
@@ -64,7 +64,7 @@ const Profile = ({ setStep, setProfile }) => {
             onClick={() => handleSubmit('teacher')}
             className={`${
               padawan ? "lg:p-12" : ""
-            } transition-all cursor-pointer duration-300 lg:p-10 p-5 m-5 bg-secondary-500 shadow hover:shadow-lg my-5 rounded-lg`}
+            } transition-all cursor-pointer duration-300 lg:p-10 p-5 m-5 bg-secondary-400 shadow hover:shadow-lg my-5 rounded-lg`}
           >
             <h2
               className={`text-white font-semibold font-gibson text-2xl transition-all duration-300`}
