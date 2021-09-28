@@ -1,5 +1,6 @@
 import { authReducer } from './auth.reducer'
 import { uiReducer } from './ui.reducer'
+import { registerReducer } from './register.reducer'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 
 import thunk from 'redux-thunk'
@@ -29,6 +30,7 @@ function configureStore() {
     Api: Api.reducer,
     Auth: authReducer,
     UI: uiReducer,
+    register: registerReducer
     // router: connectRouter(history)
   }))
   return store
