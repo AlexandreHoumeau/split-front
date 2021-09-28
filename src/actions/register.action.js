@@ -19,3 +19,10 @@ export const setInformation = (user) => async (dispatch) => {
     payload: user
   })
 }
+
+export const setSector = (sector) => async (dispatch) => {
+  dispatch({
+    type: 'SET_SECTOR',
+    payload: sector
+  })
+}

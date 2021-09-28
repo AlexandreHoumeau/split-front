@@ -4,6 +4,7 @@ export const initialState = {
   firstName: null,
   lastName: null,
   email: null,
+  sector: null
 };
 
 export const registerReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ export const registerReducer = (state = initialState, action) => {
         ...state,
         profile: action.payload,
       };
+    case "SET_SECTOR":
+        return {
+          ...state,
+          sector: action.sector
+        }
     case "SET_INFORMATION":
       return {
         ...state,
