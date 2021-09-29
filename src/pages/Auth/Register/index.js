@@ -3,24 +3,30 @@ import { connect } from "react-redux";
 import Profile from "./Profile";
 import Informations from "./BasicInformations";
 import Location from "./Professor/Location.js";
-import Summary from './Summary'
+import Summary from "./Summary";
 import { useEffect } from "react";
 import { useState } from "react";
 import Sector from "./Professor/Sector";
 import SectorDetails from "./Professor/SectorDetails";
+import Bio from "./Professor/Bio";
+import About from "./Professor/About";
+import Exp from "./Professor/Exp";
+import { setProfile, setStep } from "actions/register.action";
 
 const path = {
-  student: ["informations", 'summary'],
+  student: ["informations", "summary"],
   teacher: [
-    "profile",
     "informations",
     "sector",
     "sectorDetails",
     "bio",
+    "about",
+    "exp",
+    "location",
     "summary",
   ],
 };
-const Register = ({ step, profile }) => {
+const Register = ({ step, profile, setStep, setProfile }) => {
   const [index, setIndex] = useState();
 
   useEffect(() => {
@@ -34,14 +40,20 @@ const Register = ({ step, profile }) => {
         return <Profile />;
       case "informations":
         return <Informations />;
-      case "location":
-        return <Location />;
       case "sector":
         return <Sector />;
       case "summary":
-        return <Summary />
-      case 'sectorDetails':
-        return <SectorDetails />
+        return <Summary />;
+      case "sectorDetails":
+        return <SectorDetails />;
+      case "bio":
+        return <Bio />;
+      case "about":
+        return <About />;
+      case "exp":
+        return <Exp />;
+      case "location":
+        return <Location />;
       default:
         return <Profile />;
     }
@@ -65,7 +77,22 @@ const Register = ({ step, profile }) => {
               profile === "student" ? "bg-primary-300" : "bg-secondary-300"
             } -bottom-6 -right-10 transform rotate-12 hidden md:block`}
           ></div>
-          <div className="py-12 px-10 lg:px-24 bg-white transition-all duration-1000 rounded-2xl shadow-xl z-20">
+          <div className="py-12 px-10 lg:px-24 bg-white w-3/5 transition-all max-w-5xl duration-1000 rounded-2xl shadow-xl z-20">
+            <p
+              onClick={() => {
+                if (profile && step === "informations") {
+                  setProfile(null);
+                }
+                setStep(
+                  path[profile][
+                    path[profile]?.findIndex((element) => element === step) - 1
+                  ]
+                );
+              }}
+              className="font-gibson cursor-pointer font-semibold text-dark-500"
+            >
+              Retour
+            </p>
             <div className="relative mb-5 flex-1 w-full pt-1 mr-16">
               <div className="relative pt-1">
                 <div className="flex justify-between mb-2 items-center">
@@ -133,4 +160,4 @@ const mapStatesToProps = (state) => ({
   step: state.register.step,
   profile: state.register.profile,
 });
-export default connect(mapStatesToProps, null)(Register);
+export default connect(mapStatesToProps, { setStep, setProfile })(Register);

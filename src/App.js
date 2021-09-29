@@ -11,7 +11,6 @@ import Store from "store";
 import Register from "pages/Auth/Register";
 
 export default function App() {
-  console.log(Store.getState("Auth"));
   return (
     <Provider store={Store}>
       <BrowserRouter>
