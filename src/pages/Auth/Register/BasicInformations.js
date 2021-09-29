@@ -130,7 +130,7 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
                   : "bg-primary-500"
               } text-gray-100 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
             >
-              Connexion
+              Valider
             </button>
           </div>
         </form>
