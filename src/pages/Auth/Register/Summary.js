@@ -1,7 +1,9 @@
 import React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 
 const Summary = ({ profile, recap }) => {
+  console.log(recap)
   return (
     <div>
       {profile === "student" ? (
@@ -23,18 +25,53 @@ const Summary = ({ profile, recap }) => {
             Récpatilulatif
           </h1>
           <p className="w-2/3 text-md mb-8 font-light text-dark-500 font-gibson tracking-wide">
-            Voici toutes les informations que tu nous a passé.
+            Voici à quoi ressemblera ton profil
           </p>
+          <div className="flex">
+            <div className="w-1/5">
+              <img
+                src={recap.photo[0].data_url}
+                alt="avatar"
+                className="rounded-l-3xl"
+              />
+            </div>
+            <div className="flex justify-around w-full">
+              <div className="bg-gray-50 p-5 rounded-r-3xl">
+                <p className="mb-1 text-xl font-semibold text-dark-300 font-gibson">
+                  {recap.firstName} - {recap.lastName}
+                </p>
+                <p className="mb-2 text-xl font-normal text-dark-300 font-gibson">
+                  {recap.sector === "design"
+                    ? "UX/UI deigner"
+                    : recap.sector === "developper"
+                    ? "Développeur"
+                    : "Marketing"}
+                </p>
+                <div className="flex mt-5">
+                  <div className="py-1 px-5 bg-dark-500 rounded-full">
+                    <p className="text-white font-semibold font-gibson">
+                      Paris
+                    </p>
+                  </div>
+                  <div className="py-1 ml-2 px-5 bg-dark-500 rounded-full">
+                    <p className="text-white font-semibold font-gibson">
+                      Visio
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-          <h2 className="text-xl font-gibson text-dark-500 font-bold mb-4">
-            Informations de base
-          </h2>
-            <p className="w-2/3 text-md mb-2 text-dark-300 font-gibson">
-              {recap.firstName} {recap.lastName}
-            </p>
-          <p className="w-2/3 text-md mb-8 font-light text-dark-300 font-gibson">
-            {recap.email}
-          </p>
+              <div className="">
+                <div className="bg-gray-50 shadow px-10 py-5 rounded-3xl">
+                  <ul className="list-disc">
+                    {recap.details.map((element) => (
+                      <li className="font-gibson text-xl text-dark-500">{element}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
