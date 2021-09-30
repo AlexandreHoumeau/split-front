@@ -56,3 +56,24 @@ export const setExperience = (exp) => async (dispatch) => {
     payload: exp
   })
 }
+
+export const setLocationInformations = (location) => async (dispatch) => {
+  dispatch({
+    type: 'SET_LOCATION',
+    payload: location
+  })
+}
+
+export const setPhoto = (photo) => async (dispatch) => {
+  dispatch({
+    type: 'SET_PHOTO',
+    payload: photo
+  })
+}
+
+export const setPhone = (phone) => async (dispatch) => {
+  dispatch({
+    type: 'SET_PHONE',
+    payload: phone
+  })
+}

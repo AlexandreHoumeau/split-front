@@ -8,7 +8,10 @@ export const initialState = {
   details: [],
   bio: null,
   about: null,
-  exp: null
+  exp: null,
+  location: {},
+  phone: null,
+  photo: null,
 };
 
 export const registerReducer = (state = initialState, action) => {
@@ -47,6 +50,21 @@ export const registerReducer = (state = initialState, action) => {
       return {
         ...state,
         exp: action.payload,
+      };
+    case "SET_LOCATION":
+      return {
+        ...state,
+        location: action.payload,
+      };
+    case "SET_PHONE":
+      return {
+        ...state,
+        phone: action.payload,
+      };
+    case "SET_PHOTO":
+      return {
+        ...state,
+        photo: action.payload,
       };
     case "SET_INFORMATION":
       return {
