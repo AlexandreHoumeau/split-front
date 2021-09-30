@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import Profile from "./Profile";
+
+import { setProfile, setStep } from "actions/register.action";
 import Informations from "./BasicInformations";
+import About from "./Professor/About";
+import Avatar from "./Professor/Avatar";
+import Bio from "./Professor/Bio";
+import Exp from "./Professor/Exp";
 import Location from "./Professor/Location.js";
-import Summary from "./Summary";
-import { useEffect } from "react";
-import { useState } from "react";
+import Phone from "./Professor/Phone";
 import Sector from "./Professor/Sector";
 import SectorDetails from "./Professor/SectorDetails";
-import Bio from "./Professor/Bio";
-import About from "./Professor/About";
-import Exp from "./Professor/Exp";
-import { setProfile, setStep } from "actions/register.action";
+import Profile from "./Profile";
+import Summary from "./Summary";
 
 const path = {
   student: ["informations", "summary"],
@@ -23,6 +24,8 @@ const path = {
     "about",
     "exp",
     "location",
+    "phone",
+    "avatar",
     "summary",
   ],
 };
@@ -42,8 +45,6 @@ const Register = ({ step, profile, setStep, setProfile }) => {
         return <Informations />;
       case "sector":
         return <Sector />;
-      case "summary":
-        return <Summary />;
       case "sectorDetails":
         return <SectorDetails />;
       case "bio":
@@ -54,6 +55,12 @@ const Register = ({ step, profile, setStep, setProfile }) => {
         return <Exp />;
       case "location":
         return <Location />;
+      case "phone":
+        return <Phone />;
+      case "avatar":
+        return <Avatar />;
+      case "summary":
+        return <Summary />;
       default:
         return <Profile />;
     }
