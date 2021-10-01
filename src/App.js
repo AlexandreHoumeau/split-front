@@ -8,9 +8,9 @@ import PrivateRoute from "./routes/privateRoutes";
 // PAGES
 import Login from "./pages/Auth/Login";
 import Store from "store";
+import Register from "pages/Auth/Register";
 
 export default function App() {
-  console.log(Store.getState('Auth'))
   return (
     <Provider store={Store}>
       <BrowserRouter>
@@ -20,6 +20,12 @@ export default function App() {
             restricted={false}
             component={Login}
             path="/login"
+            exact
+          />
+          <PublicRoute
+            restricted={false}
+            component={Register}
+            path="/register"
             exact
           />
           <PrivateRoute component={Dashboard} path="/dashboard" exact />
