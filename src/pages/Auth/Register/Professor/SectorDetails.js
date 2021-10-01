@@ -83,7 +83,7 @@ const SectorDetails = ({ sector, setStep, setSectorDetails }) => {
             onClick={() => handleSubmit()}
             className={`${
               !sectors?.length ? "bg-primary-300" : "bg-primary-500"
-            } text-gray-100 text-base mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outlineshadow-lg`}
+            } text-gray-100 text-base mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outlineshadow-lg`}
             >
             Valider
           </button>

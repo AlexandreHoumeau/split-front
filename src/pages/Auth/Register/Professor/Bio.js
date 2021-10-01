@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import React from "react";
 import { useState } from "react";
 
-const Bio = ({ setStep, setBio, info}) => {
+const Bio = ({ setStep, setBio, info }) => {
   const [bio, setInformations] = useState(info || "");
 
   const handleSubmit = () => {
@@ -33,22 +33,23 @@ const Bio = ({ setStep, setBio, info}) => {
           </p>
         </div>
       </div>
-
-      <button
-        onClick={() => handleSubmit()}
-        disabled={bio.split(" ").length - 1 < 40}
-        className={`${
-          bio.split(" ").length - 1 < 40 ? "bg-primary-300" : "bg-primary-500"
-        } text-gray-100 mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
-      >
-        Valider
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => handleSubmit()}
+          disabled={bio.split(" ").length - 1 < 40}
+          className={`${
+            bio.split(" ").length - 1 < 40 ? "bg-primary-300" : "bg-primary-500"
+          } text-gray-100 mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+        >
+          Valider
+        </button>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  info: state.register.bio
-})
+  info: state.register.bio,
+});
 
 export default connect(mapStateToProps, { setStep, setBio })(Bio);

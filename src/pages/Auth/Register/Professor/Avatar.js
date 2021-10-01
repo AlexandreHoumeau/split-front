@@ -1,6 +1,4 @@
-import {
-  MinusCircleFilled, PlusCircleOutlined
-} from "@ant-design/icons";
+import { MinusCircleFilled, PlusCircleOutlined } from "@ant-design/icons";
 import { setPhoto, setStep } from "actions/register.action";
 import React, { useRef, useState } from "react";
 import ImageUploading from "react-images-uploading";
@@ -83,16 +81,17 @@ const Avatar = ({ setStep, setPhoto, photo }) => {
           )}
         </ImageUploading>
       </div>
-
-      <button
-        onClick={() => handleSubmit()}
-        disabled={!avatar?.length}
-        className={`${
-          !avatar?.length ? "bg-primary-300" : "bg-primary-500"
-        } text-gray-100 text-base mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outlineshadow-lg`}
-      >
-        Valider
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => handleSubmit()}
+          disabled={!avatar?.length}
+          className={`${
+            !avatar?.length ? "bg-primary-300" : "bg-primary-500"
+          } text-gray-100 text-base mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outlineshadow-lg`}
+        >
+          Valider
+        </button>
+      </div>
     </div>
   );
 };

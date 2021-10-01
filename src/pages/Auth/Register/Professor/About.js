@@ -3,7 +3,7 @@ import { setStep, setAboutText } from "actions/register.action";
 import { connect } from "react-redux";
 
 const About = ({ setAboutText, setStep, aboutYou }) => {
-  const [about, setAbout] = useState(aboutYou || '')
+  const [about, setAbout] = useState(aboutYou || "");
 
   const handleSubmit = () => {
     setAboutText(about);
@@ -32,23 +32,25 @@ const About = ({ setAboutText, setStep, aboutYou }) => {
           </p>
         </div>
       </div>
-
-      <button
-        onClick={() => handleSubmit()}
-        disabled={about.split(" ").length - 1 < 40}
-        className={`${
-          about.split(" ").length - 1 < 40 ? "bg-primary-300" : "bg-primary-500"
-        } text-gray-100 mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
-      >
-        Valider
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => handleSubmit()}
+          disabled={about.split(" ").length - 1 < 40}
+          className={`${
+            about.split(" ").length - 1 < 40
+              ? "bg-primary-300"
+              : "bg-primary-500"
+          } text-gray-100 mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+        >
+          Valider
+        </button>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  aboutYou: state.register.about
-})
-
+  aboutYou: state.register.about,
+});
 
 export default connect(mapStateToProps, { setStep, setAboutText })(About);

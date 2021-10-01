@@ -14,11 +14,11 @@ const Location = ({ setStep, setLocationInformations }) => {
     const newValue = {
       presentiel,
       location,
-      remote
-    }
-    setLocationInformations(newValue)
-    setStep('phone')
-  }
+      remote,
+    };
+    setLocationInformations(newValue);
+    setStep("phone");
+  };
   return (
     <div>
       <h1 className="text-3xl font-gibson font-bold mb-4 cursor-pointer">
@@ -72,13 +72,15 @@ const Location = ({ setStep, setLocationInformations }) => {
           </label>
         </div>
       </div>
-      <button
-        onClick={() => handleSubmit()}
-        className={`
-         text-gray-100 bg-primary-500 mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
-      >
-        Valider
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => handleSubmit()}
+          className={`
+         text-gray-100 bg-primary-500 mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+        >
+          Valider
+        </button>
+      </div>
     </div>
   );
 };
@@ -86,10 +88,10 @@ const customStyles = {
   option: (provided, state) => ({
     ...provided,
     width: state.selectProps.width,
-    color: '#6C62FF',
-    fontWeight: 'bold',
+    color: "#6C62FF",
+    fontWeight: "bold",
     padding: 20,
   }),
 };
 
-export default connect(null, {setLocationInformations, setStep})(Location);
+export default connect(null, { setLocationInformations, setStep })(Location);

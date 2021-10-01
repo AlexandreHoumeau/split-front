@@ -33,22 +33,23 @@ const Exp = ({ setStep, setExperience, experience }) => {
           </p>
         </div>
       </div>
-
-      <button
-        onClick={() => handleSubmit()}
-        disabled={exp.split(" ").length - 1 < 40}
-        className={`${
-          exp.split(" ").length - 1 < 40 ? "bg-primary-300" : "bg-primary-500"
-        } text-gray-100 mt-10 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
-      >
-        Valider
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => handleSubmit()}
+          disabled={exp.split(" ").length - 1 < 40}
+          className={`${
+            exp.split(" ").length - 1 < 40 ? "bg-primary-300" : "bg-primary-500"
+          } text-gray-100 mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+        >
+          Valider
+        </button>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  experience: state.register.exp
-})
+  experience: state.register.exp,
+});
 
 export default connect(mapStateToProps, { setStep, setExperience })(Exp);

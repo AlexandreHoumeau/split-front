@@ -128,7 +128,7 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
                 !(formik.isValid && formik.dirty)
                   ? "bg-primary-300"
                   : "bg-primary-500"
-              } text-gray-100 font-gibson p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+              } text-gray-100 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
             >
               Valider
             </button>
