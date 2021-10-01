@@ -1,9 +1,10 @@
 import React from "react";
-import { useEffect } from "react";
 import { connect } from "react-redux";
 
 const Summary = ({ profile, recap }) => {
-  console.log(recap);
+  const handleSubmit = () => {
+
+  }
   return (
     <div>
       {profile === "student" ? (
@@ -102,7 +103,7 @@ const Summary = ({ profile, recap }) => {
           </div>
           <div className="flex justify-center">
             <button
-              // onClick={() => handleSubmit()}
+              onClick={handleSubmit}
               className={`bg-primary-500 text-gray-100 text-lg mt-10 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outlineshadow-lg`}
             >
               Valider
