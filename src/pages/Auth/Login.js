@@ -24,10 +24,16 @@ const Login = () => {
 
     onSubmit: async (values) => {
       setError(null);
+
       await api.axios
         .post("/v1/auth/login", values)
         .then((res) => {
-          history.push("/dashboard");
+          if (res) {
+            history.push("/dashboard");
+          } else {
+            notify({ $type: "error", $message: "Une erreur est survenue" });
+            setError("Une erreur est survenue");
+          }
         })
         .catch((err) => {
           notify({ $type: "error", $message: "Une erreur est survenue" });
