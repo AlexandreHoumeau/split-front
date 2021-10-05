@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 const Summary = ({ profile, recap }) => {
+  console.log(recap);
   const handleSubmit = () => {
-
-  }
+    
+  };
   return (
     <div>
       {profile === "student" ? (
@@ -22,16 +23,11 @@ const Summary = ({ profile, recap }) => {
         </>
       ) : (
         <div>
-          <h1 className="text-3xl font-gibson font-bold mb-4">
-            Récpatilulatif
-          </h1>
+          <h1 className="text-3xl font-gibson font-bold mb-4">Récapitulatif</h1>
           <p className="w-2/3 text-md mb-8 font-light text-dark-500 font-gibson tracking-wide">
             Voici à quoi ressemblera ton profil
           </p>
           <div className="flex justify-start">
-            <h1 className="font-gibson font-medium mb-2 text-xl w-1/4">
-              Card de ton profil
-            </h1>
             <div className="w-1/4">
               <img
                 src={recap.photo[0].data_url}
@@ -45,11 +41,7 @@ const Summary = ({ profile, recap }) => {
                   {recap.firstName} - {recap.lastName}
                 </p>
                 <p className="mb-2 text-xl font-normal text-dark-300 font-gibson">
-                  {recap.sector === "design"
-                    ? "UX/UI deigner"
-                    : recap.sector === "developper"
-                    ? "Développeur"
-                    : "Marketing"}
+                  {recap.bio}
                 </p>
                 <div className="flex mt-10">
                   <div className="py-1 px-5 bg-dark-500 rounded-full">
@@ -67,10 +59,6 @@ const Summary = ({ profile, recap }) => {
             </div>
           </div>
           <div className="flex mt-10">
-            <h1 className="font-gibson font-medium mb-2 text-xl w-1/4">
-              Compétences
-            </h1>
-
             <div className="bg-gray-50 shadow px-10 py-5 rounded-3xl">
               <ul className="list-disc">
                 {recap.details.map((element) => (
@@ -83,10 +71,6 @@ const Summary = ({ profile, recap }) => {
           </div>
 
           <div className="flex mt-10">
-            <h1 className="font-gibson font-medium mb-2 text-xl w-1/4">
-              Informations
-            </h1>
-
             <div className="bg-gray-50 shadow px-10 py-5 rounded-3xl">
               <ul className="list-disc">
                 <li className="font-gibson text-xl text-dark-500">

@@ -84,7 +84,7 @@ const Register = ({ step, profile, setStep, setProfile }) => {
               profile === "student" ? "bg-primary-300" : "bg-secondary-300"
             } -bottom-6 -right-10 transform rotate-12 hidden md:block`}
           ></div>
-          <div className="py-12 px-10 lg:px-24 bg-white w-3/5 transition-all max-w-5xl duration-1000 rounded-2xl shadow-xl z-20">
+          <div className="lg:py-12 py-5 px-5 lg:px-24 bg-white w-4/5 lg:w-3/5 transition-all max-w-5xl duration-1000 rounded-2xl shadow-xl z-20">
             <p
               onClick={() => {
                 if (profile && step === "informations") {
