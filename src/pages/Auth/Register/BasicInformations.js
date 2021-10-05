@@ -24,16 +24,18 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
       email: Yup.string()
         .email("Email invalide")
         .required("Merci de renseigner un email"),
-      password: Yup.string().required("Merci de renseigner un mot de passe"),
+      password: Yup.string()
+        .min(8, "Ton mot de passe dpot faire plus de 8  caractères")
+        .required("Merci de renseigner un mot de passe"),
     }),
     onSubmit: async (values) => {
-      setInformation(values)
-      if (profile === 'student') {
-        setStep('summary')
+      setInformation(values);
+      if (profile === "student") {
+        setStep("summary");
       } else {
-        setStep('sector')
+        setStep("sector");
       }
-    }
+    },
   });
 
   return (
@@ -143,4 +145,6 @@ const mapStateToProps = (state) => ({
   user: state.register,
 });
 
-export default connect(mapStateToProps, { setInformation, setStep })(Informations);
+export default connect(mapStateToProps, { setInformation, setStep })(
+  Informations
+);
