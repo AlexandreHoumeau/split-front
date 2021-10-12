@@ -29,6 +29,7 @@ const Summary = ({ profile, recap }) => {
           </p>
           <div className="flex justify-start">
             <div className="w-1/4">
+              
               <img
                 src={recap.photo[0].data_url}
                 alt="avatar"
