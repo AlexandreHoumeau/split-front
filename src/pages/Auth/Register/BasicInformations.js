@@ -3,29 +3,22 @@ import { connect } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { setInformation, setStep } from "actions/register.action";
+import Input from "components/ui/input";
 
 const Informations = ({ profile, user, setInformation, setStep }) => {
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [lastName, setLastName] = useState(user.lastName || "");
-  const [email, setEmail] = useState(user.email || "");
-  const [password, setPassword] = useState(user.password || "");
 
   const formik = useFormik({
     initialValues: {
       firstName: firstName,
       lastName: lastName,
-      // email: email,
-      // password: password,
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("Merci de renseigner votre prénom"),
-      lastName: Yup.string().required("Merci de renseigner votre prénom"),
-      // email: Yup.string()
-      //   .email("Email invalide")
-      //   .required("Merci de renseigner un email"),
-      // password: Yup.string()
-      //   .min(8, "Ton mot de passe dpot faire plus de 8  caractères")
-      //   .required("Merci de renseigner un mot de passe"),
+      lastName: Yup.string().required(
+        "Merci de renseigner votre nom de famille"
+      ),
     }),
     onSubmit: async (values) => {
       setInformation(values);
@@ -50,79 +43,32 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
       </div>
       <div className="space-y-4">
         <form onSubmit={formik.handleSubmit}>
-          <div className="text-sm font-gibson font-semibold text-dark-500 tracking-wide">
-            PRENOM
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
+          <Input
             id="firstName"
-            name="firstName"
-            type="firstName"
-            placeholder="Rentrez votre prénom"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            label="Prénom"
             value={formik.values.firstName}
+            handleBlur={formik.handleBlur}
+            error={
+              formik.touched.firstName && formik.errors.firstName
+                ? formik.errors.firstName
+                : null
+            }
+            handleChange={formik.handleChange}
+            placeholder="Merci de renseigner ton prénom"
           />
-          {formik.touched.firstName && formik.errors.firstName ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.firstName}
-            </div>
-          ) : null}
-          <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
-            NOM DE FAMILLE
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
+          <Input
             id="lastName"
-            name="lastName"
-            type="lastName"
-            placeholder="Rentrez votre nom de famille"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            label="Nom de famille"
             value={formik.values.lastName}
+            handleBlur={formik.handleBlur}
+            error={
+              formik.touched.lastName && formik.errors.lastName
+                ? formik.errors.lastName
+                : null
+            }
+            handleChange={formik.handleChange}
+            placeholder="Merci de renseigner ton nom de famille"
           />
-          {formik.touched.lastName && formik.errors.lastName ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.lastName}
-            </div>
-          ) : null}
-          {/* <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
-            EMAIL
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Rentrez votre email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.email}
-            </div>
-          ) : null}
-          <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
-            MOT DE PASSE
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
-            id="password"
-            name="password"
-            type="password"
-            securetextentry={true}
-            placeholder="Rentrez votre mot de passe"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.password}
-            </div>
-          ) : null} */}
           <div className="mt-10 justify-center flex">
             <button
               className={`${

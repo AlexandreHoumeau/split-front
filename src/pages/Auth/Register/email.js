@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { connect } from "react-redux";
 import { useFormik } from "formik";
-import { setInformation, setStep } from "actions/register.action";
+import Input from "components/ui/input";
+import PasswordStrength from "components/ui/passwordStrength";
 
 const Email = ({ profile, user, setInformation, setStep }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const formik = useFormik({
     initialValues: {
       email: email,
@@ -19,14 +20,13 @@ const Email = ({ profile, user, setInformation, setStep }) => {
       password: Yup.string()
         .min(8, "Ton mot de passe dpot faire plus de 8  caractères")
         .required("Merci de renseigner un mot de passe"),
+      confirmPassword: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Les mots de passe ne sont pas similaire"
+      ),
     }),
     onSubmit: async (values) => {
       setInformation(values);
-      if (profile === "student") {
-        setStep("summary");
-      } else {
-        setStep("sector");
-      }
     },
   });
   return (
@@ -41,43 +41,49 @@ const Email = ({ profile, user, setInformation, setStep }) => {
       </div>
       <div className="space-y-4">
         <form onSubmit={formik.handleSubmit}>
-          <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
-            EMAIL
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
+          <Input
             id="email"
-            name="email"
-            type="email"
-            placeholder="Rentrez votre email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            label="Email"
             value={formik.values.email}
+            handleBlur={formik.handleBlur}
+            error={
+              formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : null
+            }
+            handleChange={formik.handleChange}
+            placeholder="Merci de renseigner votre email"
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.email}
-            </div>
-          ) : null}
-          <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
-            MOT DE PASSE
-          </div>
-          <input
-            className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
-            id="password"
-            name="password"
+          <Input
             type="password"
-            securetextentry={true}
-            placeholder="Rentrez votre mot de passe"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            id="password"
+            label="Mot de Passe"
             value={formik.values.password}
+            handleBlur={formik.handleBlur}
+            error={
+              formik.touched.password && formik.errors.password
+                ? formik.errors.password
+                : null
+            }
+            handleChange={formik.handleChange}
+            placeholder="Rentrez votre mot de passe"
           />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 font-gibson">
-              {formik.errors.password}
-            </div>
-          ) : null}
+          <PasswordStrength password={formik.values.password} />
+
+          <Input
+            type="password"
+            id="confirmPassword"
+            label="Confirmer le mot de passe"
+            value={formik.values.confirmPassword}
+            handleBlur={formik.handleBlur}
+            error={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+                ? formik.errors.confirmPassword
+                : null
+            }
+            handleChange={formik.handleChange}
+            placeholder="Rentrez votre mot de passe"
+          />
           <div className="mt-10 justify-center flex">
             <button
               className={`${
