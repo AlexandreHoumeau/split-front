@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useState } from "react";
 import { setInformation, setStep } from "actions/register.action";
 
 const Informations = ({ profile, user, setInformation, setStep }) => {
@@ -15,18 +14,18 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
     initialValues: {
       firstName: firstName,
       lastName: lastName,
-      email: email,
-      password: password,
+      // email: email,
+      // password: password,
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("Merci de renseigner votre prénom"),
       lastName: Yup.string().required("Merci de renseigner votre prénom"),
-      email: Yup.string()
-        .email("Email invalide")
-        .required("Merci de renseigner un email"),
-      password: Yup.string()
-        .min(8, "Ton mot de passe dpot faire plus de 8  caractères")
-        .required("Merci de renseigner un mot de passe"),
+      // email: Yup.string()
+      //   .email("Email invalide")
+      //   .required("Merci de renseigner un email"),
+      // password: Yup.string()
+      //   .min(8, "Ton mot de passe dpot faire plus de 8  caractères")
+      //   .required("Merci de renseigner un mot de passe"),
     }),
     onSubmit: async (values) => {
       setInformation(values);
@@ -87,7 +86,7 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
               {formik.errors.lastName}
             </div>
           ) : null}
-          <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
+          {/* <div className="text-sm mt-10 font-gibson font-semibold text-dark-500 tracking-wide">
             EMAIL
           </div>
           <input
@@ -123,7 +122,7 @@ const Informations = ({ profile, user, setInformation, setStep }) => {
             <div className="text-red-500 font-gibson">
               {formik.errors.password}
             </div>
-          ) : null}
+          ) : null} */}
           <div className="mt-10 justify-center flex">
             <button
               className={`${

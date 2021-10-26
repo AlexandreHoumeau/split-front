@@ -13,6 +13,7 @@ import Sector from "./Professor/Sector";
 import SectorDetails from "./Professor/SectorDetails";
 import Profile from "./Profile";
 import Summary from "./Summary";
+import Email from "./email";
 
 const path = {
   student: ["informations", "summary"],
@@ -27,6 +28,8 @@ const path = {
     "phone",
     "avatar",
     "summary",
+    "email",
+    "submit"
   ],
 };
 const Register = ({ step, profile, setStep, setProfile }) => {
@@ -61,6 +64,8 @@ const Register = ({ step, profile, setStep, setProfile }) => {
         return <Avatar />;
       case "summary":
         return <Summary />;
+      case "email":
+        return <Email />;
       default:
         return <Profile />;
     }
