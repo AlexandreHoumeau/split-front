@@ -1,5 +1,4 @@
 export const setProfile = (profile) => async (dispatch) => {
-  console.log(profile)
   dispatch({
     type: 'SET_PROFILE',
     payload: profile
@@ -7,8 +6,6 @@ export const setProfile = (profile) => async (dispatch) => {
 }
 
 export const setStep = (step) => async (dispatch) => {
-  console.log(step)
-
   dispatch({
     type: 'SET_STEP',
     payload: step
@@ -75,5 +72,12 @@ export const setPhone = (phone) => async (dispatch) => {
   dispatch({
     type: 'SET_PHONE',
     payload: phone
+  })
+}
+
+export const setEmail = (values) => async (dispatch) => {
+  dispatch({
+    type: 'SET_EMAIL',
+    payload: values
   })
 }

@@ -74,6 +74,12 @@ export const registerReducer = (state = initialState, action) => {
         lastName: action.payload.lastName,
         password: action.payload.password,
       };
+    case 'SET_EMAIL':
+      return {
+        ...state,
+        password: action.payload.password,
+        email: action.payload.email
+      }
     default:
       return state;
   }

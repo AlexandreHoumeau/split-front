@@ -35,7 +35,6 @@ const SectorDetails = ({ sector, setStep, setSectorDetails }) => {
 
   const addSector = (e) => {
     e.preventDefault();
-    console.log(newSector);
     details[sector].push(newSector);
     setSectors([...sectors, newSector]);
     setNewSector("");

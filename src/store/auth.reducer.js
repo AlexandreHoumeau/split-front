@@ -3,7 +3,8 @@ export const initialState = {
   isLoading: true,
   user: {},
   redirect: null,
-  forceRedirect: false
+  forceRedirect: false,
+  error: null
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -50,6 +51,12 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         forceRedirect: false,
         redirect: null
+      }
+
+      case 'SET_AUTH_ERROR':
+      return {
+        ...state,
+        error: action.payload,
       }
 
     default:
