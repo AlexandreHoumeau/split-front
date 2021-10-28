@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Input from "components/ui/input";
 import PasswordStrength from "components/ui/passwordStrength";
+import { setEmail, setStep } from "actions/register.action";
+import { connect } from "react-redux";
+import api from "services/api";
+import Loader from "components/ui/loader";
+import { useState } from "react";
 
-const Email = ({ profile, user, setInformation, setStep }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+const Email = ({ setEmail, user, setStep }) => {
+  const [isLoading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      email: email,
-      password: password,
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -26,11 +29,29 @@ const Email = ({ profile, user, setInformation, setStep }) => {
       ),
     }),
     onSubmit: async (values) => {
-      setInformation(values);
+      setLoading(true);
+      await setEmail(values);
+
+      const newData = {
+        ...user,
+        email: values.email,
+        password: values.password,
+      };
+      await api.axios
+        .post("/v1/auth/register", newData)
+        .then((res) => {
+          setStep("submit");
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 300);
+        });
     },
   });
   return (
     <>
+      <Loader isLoading={isLoading} />
       <div>
         <h1 className="text-3xl font-gibson font-bold mb-4 cursor-pointer">
           Et le plus important ...
@@ -90,7 +111,8 @@ const Email = ({ profile, user, setInformation, setStep }) => {
                 !(formik.isValid && formik.dirty)
                   ? "bg-primary-300"
                   : "bg-primary-500"
-              } text-gray-100 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
+              } 
+                  text-gray-100 font-gibson py-4 px-10 rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg`}
             >
               Valider
             </button>
@@ -101,4 +123,7 @@ const Email = ({ profile, user, setInformation, setStep }) => {
   );
 };
 
-export default Email;
+const mapStateToProps = (state) => ({
+  user: state.register,
+});
+export default connect(mapStateToProps, { setEmail, setStep })(Email);

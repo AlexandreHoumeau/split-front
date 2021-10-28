@@ -55,8 +55,8 @@ const PasswordStrength = ({ password }) => {
 
   return (
     <div>
-      <div className="mt-5">
-        <div className=" h-2 bg-gray-100 relative border-r-1">
+      <div className="mt-5 z-0">
+        <div className=" h-2 bg-gray-100 relative rounded">
           <div
             style={{ width: `${index}%` }}
             className={`${
