@@ -9,10 +9,12 @@ import PrivateRoute from "./routes/privateRoutes";
 import Login from "./pages/Auth/Login";
 import Store from "store";
 import Register from "pages/Auth/Register";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
     <Provider store={Store}>
+      <ToastContainer />
       <BrowserRouter>
         <Switch>
           <PublicRoute restricted={false} component={Home} path="/" exact />
