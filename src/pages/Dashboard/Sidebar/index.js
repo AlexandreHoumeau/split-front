@@ -1,24 +1,36 @@
 import React from "react";
 import routes from "routes/sidebar";
-import { Route, NavLink } from 'react-router-dom'
-import logo from 'assets/images/logo_purple.png'; // with import
-import * as Icons from 'assets/icons'
-
+import { Route, NavLink } from "react-router-dom";
+import logo from "assets/images/logo_purple.png"; // with import
+import * as Icons from "assets/icons";
+import api from "services/api";
+import { useHistory } from "react-router";
 
 const Sidebar = () => {
-
+  const history = useHistory();
   function Icon({ icon, ...props }) {
-    const Icon = Icons[icon]
-    return <Icon {...props} />
+    const Icon = Icons[icon];
+    return <Icon {...props} />;
   }
+
+  const logout = async () => {
+    await api.axios
+      .post("/v1/auth/logout")
+      .then((res) => {
+        if (res) {
+          history.push("/login");
+          localStorage.clear()
+        } 
+      })
+  };
   return (
-    <aside className="shadow-lg z-50 flex-shrink-0 hidden w-80 overflow-y-auto bg-white dark:bg-gray-800 lg:block">
+    <aside className="shadow-lg z-50 justify-between hidden w-80 h-full   overflow-y-auto bg-white dark:bg-gray-800 flex-col lg:flex">
       <div className="py-4 text-gray-500 dark:text-gray-400">
         <a
           className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
           href="/app/accueil"
         >
-          <img alt="logo split" className="w-16 ml-8" src={logo} />
+          <img alt="logo split" className="w-16 ml-6" src={logo} />
         </a>
         <ul className="mt-6">
           {routes.map((route) => (
@@ -36,11 +48,11 @@ const Sidebar = () => {
                   ></span>
                 </Route>
                 <Icon
-                    className="w-5 h-5"
-                    aria-hidden="true"
-                    icon={route.icon}
-                  />
-                <Route  />
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                  icon={route.icon}
+                />
+                <Route />
                 <span className="ml-4 text-xl">{route.name}</span>
               </NavLink>
             </li>
@@ -48,8 +60,14 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      <div>
-        <p>Déconnexion</p>
+      <div
+        onClick={() => logout()}
+        className="flex justify-center items-center cursor-pointer mt-auto mb-10"
+      >
+        <Icon className="w-5 h-5" aria-hidden="true" icon="LogoutIcon" />
+        <p className="text-center ml-2 font-gibson text-dark-500 font-semibold text-xl">
+          Déconnexion
+        </p>
       </div>
     </aside>
   );

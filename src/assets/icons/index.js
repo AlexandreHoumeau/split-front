@@ -29,6 +29,7 @@ import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
 import { ReactComponent as CalendarIcon } from './calendar.svg'
 import { ReactComponent as MessengerIcon } from './messenger.svg'
 import { ReactComponent as SettingsIcon } from './settings.svg'
+import { ReactComponent as LogoutIcon } from './logout.svg'
 
 export {
   ButtonsIcon,
@@ -61,5 +62,6 @@ export {
   OutlineLogoutIcon,
   CalendarIcon,
   MessengerIcon,
-  SettingsIcon
+  SettingsIcon,
+  LogoutIcon
 }

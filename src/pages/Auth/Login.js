@@ -29,7 +29,7 @@ const Login = () => {
         .post("/v1/auth/login", values)
         .then((res) => {
           if (res) {
-            history.push("/dashboard");
+            history.push("/app");
           } else {
             notify({ $type: "error", $message: "Une erreur est survenue" });
             setError("Une erreur est survenue");
