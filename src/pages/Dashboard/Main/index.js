@@ -18,7 +18,7 @@ const Main = ({ routes }) => {
               />
             ) : null;
           })}
-          <Redirect exact from="/app" to="/dashboard" />
+          {/* <Redirect exact from="/app" to="/" /> */}
           {/* <Route component={Page404} /> */}
         </Switch>
       </div>

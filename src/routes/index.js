@@ -24,7 +24,7 @@ const Settings = lazy(() => import('../pages/Settings'))
  */
 const routes = [
   {
-    path: '/accueil', // the url
+    path: '/home', // the url
     component: Home, // view rendered
   },
   {

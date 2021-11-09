@@ -10,6 +10,7 @@ import Login from "./pages/Auth/Login";
 import Store from "store";
 import Register from "pages/Auth/Register";
 import { ToastContainer } from "react-toastify";
+import DashboardLayout from "pages/Dashboard";
 
 export default function App() {
   return (
@@ -30,7 +31,7 @@ export default function App() {
             path="/register"
             exact
           />
-          <PrivateRoute component={Dashboard} path="/dashboard" exact />
+          <PrivateRoute component={DashboardLayout} path="/app" />
         </Switch>
       </BrowserRouter>
     </Provider>
@@ -46,21 +47,5 @@ const Home = () => (
       <div className="text-xl font-medium text-black">ChitChat</div>
       <p className="text-gray-500">You have a new message!</p>
     </div>
-  </div>
-);
-
-const Dashboard = () => (
-  <div className="App">
-    <header className="App-header">
-      <p>Hello World from Dashboard</p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
   </div>
 );
