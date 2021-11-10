@@ -6,12 +6,12 @@ const Loader = ({ isLoading }) => {
     return (
       <div className="absolute z-50 top-0 left-0 w-full h-full">
         <div className="backdrop-filter backdrop-blur-sm w-full h-full flex justify-center" />
-        <div className="top-64 bottom-0 left-0 right-0 absolute">
+        <div className="left-0 right-0 absolute">
           <Player
             autoplay
             loop
-            src="https://assets3.lottiefiles.com/packages/lf20_uwR49r.json"
-            className=" w-64 z-50"
+            src={require('assets/animations/loader.json')}
+            className=" w-1/2 z-50"
           >
             <Controls
               visible={false}

@@ -30,6 +30,7 @@ import { ReactComponent as CalendarIcon } from './calendar.svg'
 import { ReactComponent as MessengerIcon } from './messenger.svg'
 import { ReactComponent as SettingsIcon } from './settings.svg'
 import { ReactComponent as LogoutIcon } from './logout.svg'
+import { ReactComponent as CrossIcon } from './cross.svg'
 
 export {
   ButtonsIcon,
@@ -63,5 +64,6 @@ export {
   CalendarIcon,
   MessengerIcon,
   SettingsIcon,
-  LogoutIcon
+  LogoutIcon,
+  CrossIcon
 }
