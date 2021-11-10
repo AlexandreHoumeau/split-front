@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import api from "services/api";
 import { setSearch } from "actions/search.action";
 import { useEffect } from "react";
+import { useHistory } from "react-router";
 
 function Nav({ searchData, setSearch }) {
   // const { mode, toggleMode } = useContext(WindmillContext)
@@ -11,6 +12,8 @@ function Nav({ searchData, setSearch }) {
   const [keyword, setKeyword] = useState("");
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const history = useHistory();
+
 
   useEffect(() => {
     setKeyword(searchData.keyword || "");
@@ -41,6 +44,7 @@ function Nav({ searchData, setSearch }) {
         })
         .then((res) => {
           if (res) {
+            history.push("/app/home/search");
             const newData = {
               keyword,
               result: res.teachers,

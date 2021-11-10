@@ -5,6 +5,7 @@ const Home = lazy(() => import('../pages/Home'))
 const MySpace = lazy(() => import('../pages/Myspace'))
 const Messenger = lazy(() => import('../pages/Messenger'))
 const Settings = lazy(() => import('../pages/Settings'))
+const Search = lazy(() => import('../pages/Home/Search'))
 // const Charts = lazy(() => import('../pages/Charts'))
 // // const Buttons = lazy(() => import('../pages/Buttons'))
 // const Modals = lazy(() => import('../pages/Modals'))
@@ -38,6 +39,10 @@ const routes = [
   {
     path: '/settings',
     component: Settings,
+  },
+  {
+    path: '/home/search', // the url
+    component: Search, // view rendered
   },
   // {
   //   path: '/buttons',
