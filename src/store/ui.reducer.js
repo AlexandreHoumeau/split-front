@@ -5,19 +5,19 @@ const initialState = {
 
 export const uiReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case 'SET_ERRORS':
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     errors: action.payload
-    //   }
+    case 'SET_ERRORS':
+      return {
+        ...state,
+        isLoading: false,
+        errors: action.payload
+      }
 
-    // case 'CLEAR_ERRORS':
-    //   return {
-    //     ...state,
-    //     isLoading: false,
-    //     errors: null
-    //   }
+    case 'CLEAR_ERRORS':
+      return {
+        ...state,
+        isLoading: false,
+        errors: null
+      }
 
     case 'LOADING_UI':
       return {

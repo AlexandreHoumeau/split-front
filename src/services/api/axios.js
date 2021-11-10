@@ -13,9 +13,9 @@ apiAxios.defaults.headers.common["Authorization"] = `Bearer: ${authorization}`;
 apiAxios.defaults.headers.common["Accept-Language"] = locale;
 
 apiAxios.interceptors.request.use((config) => {
-  // const { dispatch } = store
+  const { dispatch } = store
 
-  // dispatch({ type: 'LOADING_UI' })
+  dispatch({ type: 'LOADING_UI' })
 
   return config;
 });
@@ -32,6 +32,7 @@ apiAxios.interceptors.request.use(function (config) {
 apiAxios.interceptors.response.use(
   function ({ data, config }) {
     const { dispatch } = store
+    dispatch({ type: 'CLEAR_ERRORS' })
 
     dispatch({
       type: 'SET_AUTH_ERROR',

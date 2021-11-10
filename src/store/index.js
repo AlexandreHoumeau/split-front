@@ -8,6 +8,7 @@ import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 
 import Api from '../services/api/redux'
+import { searchReducer } from './search.reducer'
 
 export const history = createBrowserHistory()
 // const router = routerMiddleware(history)
@@ -30,7 +31,8 @@ function configureStore() {
     Api: Api.reducer,
     Auth: authReducer,
     UI: uiReducer,
-    register: registerReducer
+    register: registerReducer,
+    search: searchReducer
     // router: connectRouter(history)
   }))
   return store
