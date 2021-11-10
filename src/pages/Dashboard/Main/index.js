@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import Loader from "components/ui/loader";
 
 const Main = ({ routes, search, isLoading }) => {
-  console.log(isLoading)
   return (
     <main className="h-full bg-purple-50 overflow-y-auto">
       <div className="container relative grid px-6 mx-auto">
