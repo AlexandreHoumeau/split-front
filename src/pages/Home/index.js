@@ -1,3 +1,4 @@
+import Card from "components/ui/card";
 import React, { useEffect, useState } from "react";
 import api from "services/api";
 
@@ -17,14 +18,10 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="mt-5">
+      <div className="flex justify-start">
         {teachers?.map((teacher, i) => (
-          <div key={i}>
-            <p>{teacher.firstName} {teacher.lastName}</p>
-            <p>{teacher.bio}</p>
-            <p>Paris</p>
-          </div>
+          <Card teacher={teacher}/>
         ))}
       </div>
     </div>
