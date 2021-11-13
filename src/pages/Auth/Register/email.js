@@ -34,6 +34,7 @@ const Email = ({ setEmail, user, setStep }) => {
 
       const newData = {
         ...user,
+        location: user.location,
         email: values.email,
         password: values.password,
       };
