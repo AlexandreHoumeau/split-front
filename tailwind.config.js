@@ -1,7 +1,14 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      colors: {
+        blueGray: colors.blueGray
+      }
+    },
     fontFamily: (theme) => ({
       ...theme("font"),
       gibson: ["canada-type-gibson", "sans-serif"],

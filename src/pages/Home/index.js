@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <div className="mt-5">
-      <div className="flex justify-start">
+      <div className="flex justify-start bg-white p-3 rounded-3xl">
         {teachers?.map((teacher, i) => (
           <Card teacher={teacher}/>
         ))}
