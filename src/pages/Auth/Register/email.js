@@ -38,6 +38,7 @@ const Email = ({ setEmail, user, setStep }) => {
         email: values.email,
         password: values.password,
       };
+      console.log(newData)
       await api.axios
         .post("/v1/auth/register", newData)
         .then((res) => {

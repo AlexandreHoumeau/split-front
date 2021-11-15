@@ -5,9 +5,16 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      zIndex: {
+        "-10": "-10",
+        "-1": "-1"
+      },
+      borderRadius: {
+       '4xl': '36px' 
+      },
       colors: {
-        blueGray: colors.blueGray
-      }
+        blueGray: colors.blueGray,
+      },
     },
     fontFamily: (theme) => ({
       ...theme("font"),
