@@ -31,6 +31,12 @@ import { ReactComponent as MessengerIcon } from './messenger.svg'
 import { ReactComponent as SettingsIcon } from './settings.svg'
 import { ReactComponent as LogoutIcon } from './logout.svg'
 import { ReactComponent as CrossIcon } from './cross.svg'
+import { ReactComponent as ArrowLeftIcon } from './arrowLeft.svg'
+import { ReactComponent as CheckMarkIcon } from './checkmark.svg'
+import { ReactComponent as SmileIcon } from './smile.svg'
+import { ReactComponent as StarIcon } from './star.svg'
+import { ReactComponent as ComputerIcon } from './computer.svg'
+import { ReactComponent as MentorIcon } from './mentor.svg'
 
 export {
   ButtonsIcon,
@@ -65,5 +71,11 @@ export {
   MessengerIcon,
   SettingsIcon,
   LogoutIcon,
-  CrossIcon
+  CrossIcon,
+  ArrowLeftIcon,
+  CheckMarkIcon,
+  SmileIcon,
+  StarIcon,
+  ComputerIcon,
+  MentorIcon
 }

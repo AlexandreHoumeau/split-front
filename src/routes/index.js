@@ -6,7 +6,7 @@ const MySpace = lazy(() => import('../pages/Myspace'))
 const Messenger = lazy(() => import('../pages/Messenger'))
 const Settings = lazy(() => import('../pages/Settings'))
 const Search = lazy(() => import('../pages/Home/Search'))
-// const Charts = lazy(() => import('../pages/Charts'))
+const TeacherOverview = lazy(() => import('../pages/Home/TeacherOverview'))
 // // const Buttons = lazy(() => import('../pages/Buttons'))
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
@@ -43,6 +43,10 @@ const routes = [
   {
     path: '/home/search', // the url
     component: Search, // view rendered
+  },
+  {
+    path: '/home/teacher/:id', // the url
+    component: TeacherOverview, // view rendered
   },
   // {
   //   path: '/buttons',

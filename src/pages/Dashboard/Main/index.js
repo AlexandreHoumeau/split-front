@@ -7,7 +7,7 @@ import Loader from "components/ui/loader";
 const Main = ({ routes, isLoading }) => {
   return (
     <main className="h-full bg-purple-50 overflow-y-auto">
-      <div className="container relative grid px-6 mx-auto">
+      <div className="relative grid">
         <Suspense fallback={<ThemedSuspense />} />
         <Loader isLoading={isLoading}/>
           <Switch>

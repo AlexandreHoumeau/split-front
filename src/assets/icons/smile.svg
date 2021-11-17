@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <g id="happy-icon" transform="translate(-41.603 -189.777)">
+    <g id="Group_1388" data-name="Group 1388" transform="translate(42.603 190.777)">
+      <circle id="ellipse" cx="12" cy="12" r="12" fill="none" stroke="#f8aa71" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <circle id="ellipse-2" cx="0.632" cy="0.632" r="0.632" transform="translate(7.579 7.579)" fill="none" stroke="#f8aa71" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <circle id="ellipse-3" cx="0.632" cy="0.632" r="0.632" transform="translate(15.158 7.579)" fill="none" stroke="#f8aa71" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="path" d="M53.392,214.959a5.693,5.693,0,0,0,4.673,2.527,5.523,5.523,0,0,0,4.674-2.527" transform="translate(-46.066 -198.538)" fill="none" stroke="#f8aa71" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

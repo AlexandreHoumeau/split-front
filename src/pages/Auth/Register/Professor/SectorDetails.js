@@ -50,6 +50,9 @@ const SectorDetails = ({ sector, setStep, setSectorDetails }) => {
       <h1 className="text-3xl font-gibson font-semibold mb-5 text-dark-500">
         Un peu plus de détails…
       </h1>
+      <p className="w-2/3 text-md mb-8 font-light text-dark-700 font-gibson tracking-wide cursor-pointer">
+        Précise nous les formations que tu souhaite proposer (ex: Initiation HTML/CSS, rédaction de contenu web, animation de test utilisateur..)
+      </p>
       <div className="flex flex-wrap">
         {details[sector].map((element) => (
           <div

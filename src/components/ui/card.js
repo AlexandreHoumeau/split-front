@@ -1,8 +1,8 @@
 import React from "react";
 
-const Card = ({ teacher }) => {
+const Card = ({ teacher, action }) => {
   return (
-    <div className=" bg-gray-50 mx-3 rounded-4xl flex flex-col justify-around items-center overflow-hidden sm:w-80 sm:flex-row sm:h-40">
+    <div onClick={() => action(teacher._id)} className="cursor-pointer bg-gray-50 mx-3 rounded-4xl flex flex-col justify-around items-center overflow-hidden sm:w-80 sm:flex-row sm:h-40">
       <div className="h-full w-5/12">
         <img
           className=" object-cover h-48 w-full"

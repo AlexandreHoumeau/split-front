@@ -2,11 +2,12 @@ import Card from "components/ui/card";
 import React, { useEffect, useState } from "react";
 import api from "services/api";
 import RectangleOrange from "assets/images/rectangle_orange.png";
+import { useHistory } from "react-router";
 // import RectangleBlue from 'assets/images/rectangle_blue.png'
 
 const Home = () => {
   const [teachers, setTeachers] = useState([]);
-
+  const history = useHistory()
   useEffect(() => {
     fetchTeachers();
   }, []);
@@ -18,6 +19,10 @@ const Home = () => {
       }
     });
   };
+
+  const teacherOverView = (teacherId) => {
+    history.push(`home/teacher/${teacherId}`)
+  }
 
   return (
     <div className="mt-5 relative">
@@ -34,7 +39,7 @@ const Home = () => {
           </div>
           <div className="flex justify-between bg-white p-3 rounded-4xl">
             {teachers.marketing?.map((teacher, i) => (
-              <Card key={i} teacher={teacher} />
+              <Card action={teacherOverView} key={i} teacher={teacher} />
             ))}
           </div>
         </div>
@@ -52,7 +57,7 @@ const Home = () => {
           </div>
           <div className="flex justify-between bg-white p-3 rounded-4xl">
             {teachers.designer?.map((teacher, i) => (
-              <Card key={i} teacher={teacher} />
+              <Card action={teacherOverView} key={i} teacher={teacher} />
             ))}
           </div>
         </div>
@@ -71,7 +76,7 @@ const Home = () => {
 
           <div className="flex justify-between bg-white p-3 rounded-4xl">
             {teachers.developper?.map((teacher, i) => (
-              <Card key={i} teacher={teacher} />
+              <Card action={teacherOverView} key={i} teacher={teacher} />
             ))}
           </div>
         </div>

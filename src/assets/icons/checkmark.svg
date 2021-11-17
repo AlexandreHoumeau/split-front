@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <g id="Group_50" data-name="Group 50" transform="translate(-194 -127)">
+    <g id="Ellipse_6" data-name="Ellipse 6" transform="translate(194 127)" fill="none" stroke="#f8aa71" stroke-width="2">
+      <circle cx="13" cy="13" r="13" stroke="none"/>
+      <circle cx="13" cy="13" r="12" fill="none"/>
+    </g>
+    <path id="ico_check" d="M2030.959,1366.186a.63.63,0,0,1,.387-.177.539.539,0,0,1,.4.144.512.512,0,0,1,.177.387.54.54,0,0,1-.144.4l-10.3,11.308-5.041-5.394a.551.551,0,0,1-.144-.4.506.506,0,0,1,.177-.376.517.517,0,0,1,.4-.155.55.55,0,0,1,.376.177l4.223,4.51Z" transform="translate(-1817.151 -1231.812)" fill="#f8aa71" stroke="#f8aa71" stroke-width="1"/>
+  </g>
+</svg>
