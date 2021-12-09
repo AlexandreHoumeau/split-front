@@ -25,8 +25,7 @@ const Home = () => {
   }
 
   return (
-    <div className="mt-5 relative">
-
+    <div className="mt-5 relative px-10">
       {teachers.marketing?.length > 0 && (
         <div className="relative">
           <div className="flex justify-between">
