@@ -37,6 +37,7 @@ import { ReactComponent as SmileIcon } from './smile.svg'
 import { ReactComponent as StarIcon } from './star.svg'
 import { ReactComponent as ComputerIcon } from './computer.svg'
 import { ReactComponent as MentorIcon } from './mentor.svg'
+import { ReactComponent as CourseIcon } from './course.svg'
 
 export {
   ButtonsIcon,
@@ -77,5 +78,6 @@ export {
   SmileIcon,
   StarIcon,
   ComputerIcon,
-  MentorIcon
+  MentorIcon,
+  CourseIcon
 }
