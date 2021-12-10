@@ -17,6 +17,11 @@
     name: 'Mon espace',
   },
   {
+    path: '/app/me/courses',
+    icon: 'CourseIcon',
+    name: 'Mes cours',
+  },
+  {
     path: '/app/messenger',
     icon: 'MessengerIcon',
     name: 'Ma messagerie',
