@@ -56,8 +56,7 @@ const Calendar = () => {
   }, [daysInAMonth, firstDay]);
 
   return (
-    <div>
-      <div>Calendrier</div>
+    <div className="mb-20 mt-10">
 
       {/* CALENDAR */}
       <div className="flex justify-center">
