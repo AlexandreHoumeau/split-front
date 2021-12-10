@@ -87,7 +87,7 @@ const TeacherOverview = () => {
               <div className="flex justify-between">
                 <div className="py-2 px-5 mr-3 bg-dark-500 mt-2 rounded-full">
                   <p className="text-white text-base font-medium font-gibson">
-                    20€\h
+                    20€/h
                   </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const TeacherOverview = () => {
 
           <div>
             <Button
-              text="CALENDAR"
+              text="CALENDRIER"
               action={openModal}
               type="primary"
               icon="CalendarIcon"

@@ -29,7 +29,7 @@ const Card = ({ teacher, action }) => {
             </div>
           )}
           <div className="py-1 px-2 mr-3 bg-dark-500 rounded-full">
-            <p className="text-white text-sm font-medium font-gibson">20€\h</p>
+            <p className="text-white text-sm font-medium font-gibson">20€/h</p>
           </div>
         </div>
       </div>
