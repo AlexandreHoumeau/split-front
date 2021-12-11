@@ -8,6 +8,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import TimePicker from "react-time-picker";
 import "./index.css";
+
 const MyCourses = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
