@@ -16,9 +16,9 @@ const Button = ({ text, type, action, icon }) => {
       {icon && (
         <Icon className="w-5 h-5 mr-2" color="white" aria-hidden="true" icon={icon} />
       )}
-      <p className="text-white font-gibson font-semibold text-sm">
+      <div className="text-white font-gibson font-semibold text-sm">
         {text}
-      </p>
+      </div>
     </button>
   );
 };
