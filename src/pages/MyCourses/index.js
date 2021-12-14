@@ -13,11 +13,13 @@ import moment from "moment";
 import "moment/locale/fr";
 
 const MyCourses = () => {
-  const [user, setUser] = useState(null);
+  const [courses, setCourses] = useState(null);
+  const [scheldules, setSchedules] = useState(null);
   const [disableDay, setDisableDay] = useState(false);
   const [recapSentence, setRecapSentence] = useState(
     <p className="italic">Pas d'horraire séléctioné</p>
   );
+
   const [date, setDate] = useState({
     day: "",
     startAt: null,
@@ -25,23 +27,45 @@ const MyCourses = () => {
     repeat: "noRepeat",
   });
 
-  const fetchUser = async () => {
-    const data = await api.axios.get("/v1/auth/me");
-    if (data.user) {
-      setUser(data.user);
+  const submitScheldule = async (courseId) => {
+    const values = {
+      ...date,
+      courseId,
+    };
+    const data = await api.axios.post("/v1/scheldule/add", values);
+    if (data?.$message) {
+      setDate({
+        day: "",
+        startAt: null,
+        endAt: null,
+        repeat: "noRepeat",
+      });
+    }
+  };
+
+  const getCourses = async () => {
+    const { courses } = await api.axios.get("/v1/teacher/courses/list");
+    console.log(courses);
+    if (courses?.length) {
+      setCourses(courses);
     }
   };
 
   useEffect(() => {
-    fetchUser();
+    getCourses();
   }, []);
 
   useEffect(() => {
-    console.log(date);
     if (date.repeat === "everyDay") {
       setDisableDay(true);
       if (date.startAt && date.endAt) {
-        setRecapSentence(<p>Tous les jours entre 12h et 13h</p>);
+        setRecapSentence(
+          <p className="font-gibson text-dark-500 text-base">
+            Tous les <span className="font-semibold">jours </span>
+            entre {moment(date.startAt).locale("fr").format("HH:mm")} et{" "}
+            {moment(date.endAt).locale("fr").format("HH:mm")}.
+          </p>
+        );
       } else {
         setRecapSentence(<p className="italic">Pas d'horraire séléctioné</p>);
       }
@@ -49,15 +73,14 @@ const MyCourses = () => {
     if (date.repeat === "everyWeek") {
       setDisableDay(false);
       if (date.day && date.startAt && date.endAt) {
-        setRecapSentence(<p>Tous les jeudi entre 12h et 13h</p>);
         setRecapSentence(
           <p className="font-gibson text-dark-500 text-base">
-            Le{" "}
+            Tous les{" "}
             <span className="font-semibold">
-              {moment(date.day).locale("fr").format("dddd Do MMMM YYYY")}
+              {moment(date.day).locale("fr").format("dddd")}
             </span>{" "}
-            de {moment(date.startAt).format("hh:mm")} à{" "}
-            {moment(date.endAt).format("hh:mm")}
+            entre {moment(date.startAt).locale("fr").format("HH:mm")} et{" "}
+            {moment(date.endAt).locale("fr").format("HH:mm")}.
           </p>
         );
       } else {
@@ -73,8 +96,8 @@ const MyCourses = () => {
             <span className="font-semibold">
               {moment(date.day).locale("fr").format("dddd Do MMMM YYYY")}
             </span>{" "}
-            de {moment(date.startAt).format("hh:mm")} à{" "}
-            {moment(date.endAt).format("hh:mm")}
+            de {moment(date.startAt).format("HH:mm")} à{" "}
+            {moment(date.endAt).format("HH:mm")}.
           </p>
         );
       } else {
@@ -94,12 +117,10 @@ const MyCourses = () => {
         </div>
 
         <div className="bg-white mt-8 rounded-3xl shadow-lg">
-          {user?.courses?.map((course, index) => (
+          {courses?.map((course, index) => (
             <div
               className={`w-full py-5 ${
-                user?.courses.length - 1 === index
-                  ? ""
-                  : "border-b border-dark-100"
+                courses.length - 1 === index ? "" : "border-b border-dark-100"
               }`}
               key={course._id}
             >
@@ -131,8 +152,16 @@ const MyCourses = () => {
                           <div className="text-dark-500 font-gibson font-semibold">
                             Tes horaires
                           </div>
-                          {course.schedule ? (
-                            <div></div>
+                          {course._schedules?.length > 0 ? (
+                            <div className="flex">
+                            {course._schedules.map((scheldule) => (
+                              <div className="bg-blueGray-200 rounded-md px-5 py-2 flex items-center">
+                                <div className="font-gibson font-bold mr-2">{moment(scheldule.day).format("DD/MM")}</div>
+                                <div className="font-gibson mr-2">{moment(scheldule.startAt).format("hh:mm")}</div>
+                                <div className="font-gibson">{moment(scheldule.endAt).format("hh:mm")}</div>
+                              </div>
+                            ))}
+                            </div>
                           ) : (
                             <div className=" italic text-dark-500">
                               Pas d'horaire enregistré
@@ -360,6 +389,7 @@ const MyCourses = () => {
                             </div>
                             <div className="flex justify-center">
                               <Button
+                                action={() => submitScheldule(course._id)}
                                 type="primary"
                                 text="AJOUTER UN HORRAIRE"
                               />
