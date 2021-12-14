@@ -56,22 +56,24 @@ apiAxios.interceptors.response.use(
     }
 
     if ($message) {
-      console.log($message);
+      toast.success($message); 
     }
 
     return data;
   },
   function (error) {
-    console.log(error)
-    // const { dispatch } = store
+    const { dispatch } = store
 
-    // dispatch({
-    //   type: 'SET_AUTH_ERROR',
-    //   payload: error
-    // })
-
+    setTimeout(() => {
+      dispatch({ type: 'NO_LOADING' })
+    }, 300)
+    
     if (error.response?.data?.$message) {
       toast.error(error.response?.data?.$message); 
+    }
+
+    if (error.response?.data?.$message?.message) {
+      toast.error(error.response?.data?.$message.message); 
     }
   }
 );
