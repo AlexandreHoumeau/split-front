@@ -1,110 +1,35 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "services/api";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Switch } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import Button from "components/ui/button";
-import { RadioGroup } from "@headlessui/react";
 
 import "antd/lib/date-picker/style/css";
-import { DatePicker, TimePicker, Space } from "antd";
-import classNames from "classnames";
-import moment from "moment";
 import "moment/locale/fr";
+import SchelduleDate from "components/ui/SchelduleDate";
+import NewScheldule from "./NewScheldule";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState(null);
-  const [scheldules, setSchedules] = useState(null);
-  const [disableDay, setDisableDay] = useState(false);
-  const [recapSentence, setRecapSentence] = useState(
-    <p className="italic">Pas d'horraire séléctioné</p>
-  );
-
-  const [date, setDate] = useState({
-    day: "",
-    startAt: null,
-    endAt: null,
-    repeat: "noRepeat",
-  });
-
-  const submitScheldule = async (courseId) => {
-    const values = {
-      ...date,
-      courseId,
-    };
-    const data = await api.axios.post("/v1/scheldule/add", values);
-    if (data?.$message) {
-      setDate({
-        day: "",
-        startAt: null,
-        endAt: null,
-        repeat: "noRepeat",
-      });
-    }
-  };
+  const [enabled, setEnabled] = useState(false);
 
   const getCourses = async () => {
     const { courses } = await api.axios.get("/v1/teacher/courses/list");
-    console.log(courses);
     if (courses?.length) {
       setCourses(courses);
     }
   };
 
+  const setCourseActive = async (courseId) => {
+    await api.axios.post(`/v1/teacher/courses/${courseId}`)
+    .then(() => {
+      getCourses()
+    })
+  }
+
   useEffect(() => {
     getCourses();
   }, []);
-
-  useEffect(() => {
-    if (date.repeat === "everyDay") {
-      setDisableDay(true);
-      if (date.startAt && date.endAt) {
-        setRecapSentence(
-          <p className="font-gibson text-dark-500 text-base">
-            Tous les <span className="font-semibold">jours </span>
-            entre {moment(date.startAt).locale("fr").format("HH:mm")} et{" "}
-            {moment(date.endAt).locale("fr").format("HH:mm")}.
-          </p>
-        );
-      } else {
-        setRecapSentence(<p className="italic">Pas d'horraire séléctioné</p>);
-      }
-    }
-    if (date.repeat === "everyWeek") {
-      setDisableDay(false);
-      if (date.day && date.startAt && date.endAt) {
-        setRecapSentence(
-          <p className="font-gibson text-dark-500 text-base">
-            Tous les{" "}
-            <span className="font-semibold">
-              {moment(date.day).locale("fr").format("dddd")}
-            </span>{" "}
-            entre {moment(date.startAt).locale("fr").format("HH:mm")} et{" "}
-            {moment(date.endAt).locale("fr").format("HH:mm")}.
-          </p>
-        );
-      } else {
-        setRecapSentence(<p className="italic">Pas d'horraire séléctioné</p>);
-      }
-    }
-    if (date.repeat === "noRepeat") {
-      setDisableDay(false);
-      if (date.day && date.startAt && date.endAt) {
-        setRecapSentence(
-          <p className="font-gibson text-dark-500 text-base">
-            Le{" "}
-            <span className="font-semibold">
-              {moment(date.day).locale("fr").format("dddd Do MMMM YYYY")}
-            </span>{" "}
-            de {moment(date.startAt).format("HH:mm")} à{" "}
-            {moment(date.endAt).format("HH:mm")}.
-          </p>
-        );
-      } else {
-        setRecapSentence(<p className="italic">Pas d'horraire séléctioné</p>);
-      }
-    }
-  }, [date]);
 
   return (
     <div className="lg:grid grid-cols-7 gap-4 ">
@@ -149,252 +74,51 @@ const MyCourses = () => {
 
                       <Disclosure.Panel className="px-4 pt-4 pb-2">
                         <div>
+                            <div className="pb-5">
+                              <Switch.Group>
+                                <div className="flex items-center">
+                                  <Switch
+                                    checked={course.isActive}
+                                    onChange={setCourseActive}
+                                    className={`${
+                                      enabled ? "bg-secondary" : "bg-gray-200"
+                                    } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                                  >
+                                    <span
+                                      className={`${
+                                        enabled
+                                          ? "translate-x-6"
+                                          : "translate-x-1"
+                                      } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+                                    />
+                                  </Switch>
+                                  <Switch.Label className="ml-4">
+                                    Mettre en ligne le cours
+                                  </Switch.Label>
+                                </div>
+                              </Switch.Group>
+                              </div>
                           <div className="text-dark-500 font-gibson font-semibold">
                             Tes horaires
                           </div>
                           {course._schedules?.length > 0 ? (
-                            <div className="flex">
-                            {course._schedules.map((scheldule) => (
-                              <div className="bg-blueGray-200 rounded-md px-5 py-2 flex items-center">
-                                <div className="font-gibson font-bold mr-2">{moment(scheldule.day).format("DD/MM")}</div>
-                                <div className="font-gibson mr-2">{moment(scheldule.startAt).format("hh:mm")}</div>
-                                <div className="font-gibson">{moment(scheldule.endAt).format("hh:mm")}</div>
-                              </div>
-                            ))}
+                            <div className="flex flex-wrap">
+                              {course._schedules.map((scheldule) => (
+                                <SchelduleDate
+                                  refreshAction={getCourses}
+                                  scheldule={scheldule}
+                                />
+                              ))}
                             </div>
                           ) : (
                             <div className=" italic text-dark-500">
                               Pas d'horaire enregistré
                             </div>
                           )}
-
-                          <div>
-                            <div className="my-10">
-                              <div>
-                                <p className="text-dark-500 font-gibson font-semibold mb-2">
-                                  Créer une nouvelle date
-                                </p>
-                                <div className="flex items-start">
-                                  <Space
-                                    className="flex items-start"
-                                    direction="horizontal"
-                                    size="large"
-                                  >
-                                    <div className="flex flex-col">
-                                      <DatePicker
-                                        onChange={(res) =>
-                                          setDate({
-                                            ...date,
-                                            day: res?.toISOString() || null,
-                                          })
-                                        }
-                                        format="DD/MM/YYYY"
-                                        disabled={disableDay}
-                                        className="w-60 font-gibson"
-                                        style={{
-                                          borderRadius: "10px",
-                                          cursor: "pointer",
-                                          fontSize: "17px",
-                                          marginBottom: "10px",
-                                          padding: "16px",
-                                        }}
-                                        placeholder="Choisir un jour"
-                                        size="large"
-                                      />
-                                      <TimePicker
-                                        onChange={(res) =>
-                                          setDate({
-                                            ...date,
-                                            startAt: res?.toISOString() || null,
-                                          })
-                                        }
-                                        className="w-60 font-gibson"
-                                        style={{
-                                          borderRadius: "10px",
-                                          cursor: "pointer",
-                                          fontSize: "17px",
-                                          marginBottom: "10px",
-                                          padding: "16px",
-                                        }}
-                                        size="large"
-                                        placeholder="Choisir une heure de début"
-                                        format={"HH:mm"}
-                                      />
-                                      <TimePicker
-                                        onChange={(res) =>
-                                          setDate({
-                                            ...date,
-                                            endAt: res?.toISOString() || null,
-                                          })
-                                        }
-                                        className="w-60 font-gibson"
-                                        style={{
-                                          borderRadius: "10px",
-                                          cursor: "pointer",
-                                          fontSize: "17px",
-                                          margin: "0px",
-                                          padding: "16px",
-                                        }}
-                                        size="large"
-                                        placeholder="Choisir une heure de fin"
-                                        format={"HH:mm"}
-                                      />
-                                    </div>
-                                    <div>
-                                      <RadioGroup
-                                        value={date.repeat}
-                                        onChange={(value) =>
-                                          setDate({ ...date, repeat: value })
-                                        }
-                                        className="relative"
-                                      >
-                                        <RadioGroup.Label className="text-dark-500 absolute -top-7 font-gibson font-semibold mb-5">
-                                          Récurence
-                                        </RadioGroup.Label>
-
-                                        <div className="">
-                                          <RadioGroup.Option
-                                            value="noRepeat"
-                                            className={({ checked }) =>
-                                              `${
-                                                checked
-                                                  ? "bg-primary-300 border-primary-300"
-                                                  : "border-gray-200"
-                                              } mb-2 relative border p-2 cursor-pointer rounded-lg flex`
-                                            }
-                                          >
-                                            {({ checked }) => (
-                                              <div className="flex flex-col">
-                                                <RadioGroup.Label
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-indigo-900"
-                                                      : "text-gray-900",
-                                                    "block text-sm font-gibson font-medium"
-                                                  )}
-                                                >
-                                                  Pas de récurrence
-                                                </RadioGroup.Label>
-                                                <RadioGroup.Description
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-primary-700"
-                                                      : "text-gray-500",
-                                                    "block text-sm font-gibson"
-                                                  )}
-                                                >
-                                                  Cet horraire est exceptionnel
-                                                </RadioGroup.Description>
-                                              </div>
-                                            )}
-                                          </RadioGroup.Option>
-
-                                          <RadioGroup.Option
-                                            value="everyDay"
-                                            className={({ checked }) =>
-                                              `${
-                                                checked
-                                                  ? "bg-primary-300 border-primary-300"
-                                                  : "border-gray-200"
-                                              } mb-2 relative border p-2 cursor-pointer rounded-lg flex`
-                                            }
-                                          >
-                                            {({ checked }) => (
-                                              <div className="flex flex-col">
-                                                {/* This Label is for the `RadioGroup.Option`.  */}
-                                                <RadioGroup.Label
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-indigo-900"
-                                                      : "text-gray-900",
-                                                    "block text-sm font-gibson font-medium"
-                                                  )}
-                                                >
-                                                  Tous les jours
-                                                </RadioGroup.Label>
-
-                                                {/* This Description is for the `RadioGroup.Option`.  */}
-                                                <RadioGroup.Description
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-primary-700"
-                                                      : "text-gray-500",
-                                                    "block text-sm font-gibson"
-                                                  )}
-                                                >
-                                                  Mettre cet horraire tous les
-                                                  jours
-                                                </RadioGroup.Description>
-                                              </div>
-                                            )}
-                                          </RadioGroup.Option>
-
-                                          <RadioGroup.Option
-                                            value="everyWeek"
-                                            className={({ checked }) =>
-                                              `${
-                                                checked
-                                                  ? "bg-primary-300 border-primary-300"
-                                                  : "border-gray-200"
-                                              } relative border p-2 cursor-pointer rounded-lg flex`
-                                            }
-                                          >
-                                            {({ checked }) => (
-                                              <div className="flex flex-col">
-                                                {/* This Label is for the `RadioGroup.Option`.  */}
-                                                <RadioGroup.Label
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-primary-900"
-                                                      : "text-gray-900",
-                                                    "block text-sm font-gibson font-medium"
-                                                  )}
-                                                >
-                                                  Toutes les semaines
-                                                </RadioGroup.Label>
-
-                                                {/* This Description is for the `RadioGroup.Option`.  */}
-                                                <RadioGroup.Description
-                                                  as="span"
-                                                  className={classNames(
-                                                    checked
-                                                      ? "text-primary-700"
-                                                      : "text-gray-500",
-                                                    "block text-sm font-gibson"
-                                                  )}
-                                                >
-                                                  Mettre cet horraire toutes les
-                                                  semaines
-                                                </RadioGroup.Description>
-                                              </div>
-                                            )}
-                                          </RadioGroup.Option>
-                                        </div>
-                                      </RadioGroup>
-                                    </div>
-                                    <div className="relative">
-                                      <div className="text-dark-500 absolute -top-7 font-gibson font-semibold mb-5">
-                                        Recapitulatif
-                                      </div>
-                                      <div>{recapSentence}</div>
-                                    </div>
-                                  </Space>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex justify-center">
-                              <Button
-                                action={() => submitScheldule(course._id)}
-                                type="primary"
-                                text="AJOUTER UN HORRAIRE"
-                              />
-                            </div>
-                          </div>
+                          <NewScheldule
+                            course={course}
+                            refreshAction={getCourses}
+                          />
                         </div>
                       </Disclosure.Panel>
                     </>
@@ -405,7 +129,6 @@ const MyCourses = () => {
           ))}
         </div>
       </div>
-
       <div className="bg-white hidden lg:block h-screen col-span-2 shadow-lg"></div>
     </div>
   );
