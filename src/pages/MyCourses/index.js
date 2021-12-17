@@ -17,11 +17,15 @@ const MyCourses = () => {
     const { courses } = await api.axios.get("/v1/teacher/courses/list");
     if (courses?.length) {
       setCourses(courses);
+      console.log(courses)
     }
   };
 
-  const setCourseActive = async (courseId) => {
-    await api.axios.post(`/v1/teacher/courses/${courseId}`)
+  const setCourseActive = async (course) => {
+    console.log(!course.isActive)
+    await api.axios.put(`/v1/teacher/courses/${course._id}`, {
+      isActive: !course.isActive
+    })
     .then(() => {
       getCourses()
     })
@@ -79,21 +83,21 @@ const MyCourses = () => {
                                 <div className="flex items-center">
                                   <Switch
                                     checked={course.isActive}
-                                    onChange={setCourseActive}
+                                    onChange={() => setCourseActive(course)}
                                     className={`${
-                                      enabled ? "bg-secondary" : "bg-gray-200"
+                                      course.isActive ? "bg-secondary" : "bg-gray-200"
                                     } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
                                   >
                                     <span
                                       className={`${
-                                        enabled
+                                        course.isActive
                                           ? "translate-x-6"
                                           : "translate-x-1"
                                       } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
                                     />
                                   </Switch>
-                                  <Switch.Label className="ml-4">
-                                    Mettre en ligne le cours
+                                  <Switch.Label className="ml-4 cursor-pointer font-gibson font-semibold">
+                                    Mettre {course.isActive ? 'hors ligne' : 'en ligne'} le cours
                                   </Switch.Label>
                                 </div>
                               </Switch.Group>
