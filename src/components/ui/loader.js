@@ -6,7 +6,7 @@ const Loader = ({ isLoading }) => {
     return (
       <div className="absolute z-50 top-0 left-0 w-full h-full">
         <div className="backdrop-filter backdrop-blur-sm w-full h-full flex justify-center" />
-        <div className="left-0 right-0 absolute">
+        <div className="left-0 right-0 top-0 absolute">
           <Player
             autoplay
             loop
