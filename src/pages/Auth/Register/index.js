@@ -93,7 +93,7 @@ const Register = ({ step, profile, setStep, setProfile }) => {
             } -bottom-6 -right-10 transform rotate-12 hidden md:block`}
           ></div>
           <div className="lg:py-12 py-5 px-5 lg:px-24 bg-white w-4/5 lg:w-3/5 transition-all max-w-5xl duration-1000 rounded-2xl shadow-xl z-20">
-            <p
+            <div
               onClick={() => {
                 if (profile && step === "informations") {
                   setProfile(null);
@@ -107,7 +107,7 @@ const Register = ({ step, profile, setStep, setProfile }) => {
               className="font-gibson cursor-pointer font-semibold text-dark-500"
             >
               Retour
-            </p>
+            </div>
             <div className="relative mb-5 flex-1 w-full pt-1 mr-16">
               <div className="relative pt-1">
                 <div className="flex justify-between mb-2 items-center">
