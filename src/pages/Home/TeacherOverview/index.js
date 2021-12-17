@@ -53,9 +53,9 @@ const TeacherOverview = () => {
       <div className="">
         <div className="p-5 flex items-center" onClick={goBack}>
           <ArrowLeftIcon />
-          <p className="text-secondary-500 ml-2 cursor-pointer font-gibson font-semibold text-xl">
+          <div className="text-secondary-500 ml-2 cursor-pointer font-gibson font-semibold text-xl">
             Retour
-          </p>
+          </div>
         </div>
 
         <div className="bg-white flex items-center justify-between w-full  px-10 py-5">
@@ -86,9 +86,9 @@ const TeacherOverview = () => {
               <p className="text-3xl text-dark-500 font-gibson">Paris</p>
               <div className="flex justify-between">
                 <div className="py-2 px-5 mr-3 bg-dark-500 mt-2 rounded-full">
-                  <p className="text-white text-base font-medium font-gibson">
+                  <div className="text-white text-base font-medium font-gibson">
                     20€/h
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
