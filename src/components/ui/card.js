@@ -25,11 +25,11 @@ const Card = ({ teacher, action }) => {
         <div className="flex justify-between">
           {teacher.location?.presentiel && (
             <div className="py-1 px-2 mr-2 bg-dark-500 rounded-full">
-              <p className="text-white text-sm font-medium font-gibson">Présentiel</p>
+              <div className="text-white text-sm font-medium font-gibson">Présentiel</div>
             </div>
           )}
           <div className="py-1 px-2 mr-3 bg-dark-500 rounded-full">
-            <p className="text-white text-sm font-medium font-gibson">20€/h</p>
+            <div className="text-white text-sm font-medium font-gibson">20€/h</div>
           </div>
         </div>
       </div>
