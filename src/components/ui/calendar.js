@@ -2,15 +2,27 @@ import React, { useState, useEffect } from "react";
 import Button from 'components/ui/button'
 import moment from "moment";
 import "moment/locale/fr";
+import api from "services/api";
+import classNames from "classnames";
 
 const daysOfTheWeek = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
-const Calendar = () => {
+const Calendar = ({ teacherId }) => {
   const [months, setMonths] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [daysInAMonth, setDaysInAMonth] = useState(0);
   const [days, setDays] = useState([]);
   const [firstDay, setFirstDay] = useState(null);
+
+  const fetchCourses = async () => {
+    const courses =  await api.axios.get(`/v1/scheldule/${teacherId}`)
+
+    console.log(courses)
+  }
+
+  useEffect(() => {
+    fetchCourses()
+  }, [])
 
   useEffect(() => {
     const array = [];
@@ -49,7 +61,7 @@ const Calendar = () => {
         array.push(<div> </div>);
       }
       for (let index = 1; index <= daysInAMonth; index++) {
-        array.push(<div className="mt-5">{index}</div>);
+        array.push(<div className={classNames('mt-5')}>{index}</div>);
       }
       setDays(array);
     }
@@ -84,15 +96,15 @@ const Calendar = () => {
             {/* DAYS OF THE WEEK */}
             <div className="grid grid-cols-7 gap-4 text-center">
               {daysOfTheWeek.map((day) => (
-                <div className="font-gibson font-semibold text-2xl text-dark-500">
+                <div key={day} className="font-gibson font-semibold text-2xl text-dark-500">
                   {day}
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-7 gap-4 text-center">
-              {days.map((day) => (
-                <>{day}</>
+              {days.map((day, index) => (
+                <div key={index}>{day}</div>
               ))}
             </div>
             <div className="flex mt-10 justify-center">
