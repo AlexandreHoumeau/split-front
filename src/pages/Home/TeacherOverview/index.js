@@ -69,6 +69,7 @@ const TeacherOverview = () => {
               <img
                 className="absolute w-12 bottom-10 -left-5"
                 src={BlueRectangle}
+                alt="rectange"
               />
             </div>
 
@@ -163,7 +164,7 @@ const TeacherOverview = () => {
           </div>
         </div>
       ): (
-        <Calendar />
+        <Calendar teacherId={teacher._id} />
       )}
       </div>
 
@@ -215,13 +216,13 @@ const TeacherOverview = () => {
                   </div>
                   <ul>
                     {teacher?.details.map((detail) => (
-                      <div className="">
-                        <label class="inline-flex items-center">
+                      <div key={detail} className="">
+                        <label className="inline-flex items-center">
                           <input
                             type="checkbox"
-                            class="form-checkbox text-primary-500"
+                            className="form-checkbox text-primary-500"
                           />
-                          <span class="ml-2">{detail}</span>
+                          <span className="ml-2">{detail}</span>
                         </label>
                       </div>
                     ))}
