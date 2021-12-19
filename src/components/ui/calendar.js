@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Button from 'components/ui/button'
+import Button from "components/ui/button";
 import moment from "moment";
 import "moment/locale/fr";
 import api from "services/api";
@@ -15,23 +15,23 @@ const Calendar = ({ teacherId }) => {
   const [firstDay, setFirstDay] = useState(null);
 
   const fetchCourses = async () => {
-    const courses =  await api.axios.get(`/v1/scheldule/${teacherId}`)
+    const courses = await api.axios.get(`/v1/scheldule/${teacherId}`);
 
-    console.log(courses)
-  }
+    console.log(courses);
+  };
 
   useEffect(() => {
-    fetchCourses()
-  }, [])
+    fetchCourses();
+  }, []);
 
   useEffect(() => {
     const array = [];
     for (let index = 0; index < 5; index++) {
       const values = {
         month: moment().locale("fr").add(index, "month").format("MMMM"),
-        year: moment().locale("fr").add(index, "month").format("YYYY")
-      }
-      array.push(values)
+        year: moment().locale("fr").add(index, "month").format("YYYY"),
+      };
+      array.push(values);
     }
     setMonths(array);
     setSelectedMonth(array[0]);
@@ -39,7 +39,10 @@ const Calendar = ({ teacherId }) => {
 
   useEffect(() => {
     if (selectedMonth) {
-      const selected = moment().month(selectedMonth.month).year(selectedMonth.year).format("YYYY-MM");
+      const selected = moment()
+        .month(selectedMonth.month)
+        .year(selectedMonth.year)
+        .format("YYYY-MM");
       setFirstDay(
         moment(selected, "YYYY-MM")
           .startOf("month")
@@ -52,16 +55,36 @@ const Calendar = ({ teacherId }) => {
   }, [selectedMonth]);
 
   useEffect(() => {
+    const startOfTheMonth = moment()
+      .month(selectedMonth?.month || Date.now())
+      .year(selectedMonth?.year || Date.now())
+      .format("DD/MM/YYYY");
+
     const array = [];
+
     if (firstDay) {
       const indexFirstDay = daysOfTheWeek.findIndex(
         (day) => day === firstDay.charAt(0).toUpperCase() + firstDay.slice(1)
-      );
+      )
+
       for (let currentIndex = 0; currentIndex < indexFirstDay; currentIndex++) {
         array.push(<div> </div>);
       }
+
       for (let index = 1; index <= daysInAMonth; index++) {
-        array.push(<div className={classNames('mt-5')}>{index}</div>);
+        console.log(moment(startOfTheMonth).add(index, 'days').format("DD/MM/YYYY"), moment().format("DD/MM/YYYY"))
+        array.push(
+          <div
+            className={classNames(
+              "m-2",
+              startOfTheMonth === moment().format("DD/MM/YYYY")
+                ? "bg-primary-500 text-white rounded-full"
+                : ""
+            )}
+          >
+            {index}
+          </div>
+        );
       }
       setDays(array);
     }
@@ -69,7 +92,6 @@ const Calendar = ({ teacherId }) => {
 
   return (
     <div className="mb-20 mt-10">
-
       {/* CALENDAR */}
       <div className="flex justify-center">
         {/* HEADER (months) */}
@@ -96,7 +118,10 @@ const Calendar = ({ teacherId }) => {
             {/* DAYS OF THE WEEK */}
             <div className="grid grid-cols-7 gap-4 text-center">
               {daysOfTheWeek.map((day) => (
-                <div key={day} className="font-gibson font-semibold text-2xl text-dark-500">
+                <div
+                  key={day}
+                  className="font-gibson font-semibold text-2xl text-dark-500"
+                >
                   {day}
                 </div>
               ))}
@@ -108,7 +133,7 @@ const Calendar = ({ teacherId }) => {
               ))}
             </div>
             <div className="flex mt-10 justify-center">
-            <Button text="RESERVER" type="primary"  />
+              <Button text="RESERVER" type="primary" />
             </div>
           </div>
         </div>
