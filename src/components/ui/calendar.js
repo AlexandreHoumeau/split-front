@@ -58,8 +58,7 @@ const Calendar = ({ teacherId }) => {
     const startOfTheMonth = moment()
       .month(selectedMonth?.month || Date.now())
       .year(selectedMonth?.year || Date.now())
-      .format("DD/MM/YYYY");
-
+      .startOf('month')
     const array = [];
 
     if (firstDay) {
@@ -72,12 +71,11 @@ const Calendar = ({ teacherId }) => {
       }
 
       for (let index = 1; index <= daysInAMonth; index++) {
-        console.log(moment(startOfTheMonth).add(index, 'days').format("DD/MM/YYYY"), moment().format("DD/MM/YYYY"))
         array.push(
           <div
             className={classNames(
               "m-2",
-              startOfTheMonth === moment().format("DD/MM/YYYY")
+              moment(startOfTheMonth).add(index, 'days').format("DD/MM/YYYY") === moment().format("DD/MM/YYYY")
                 ? "bg-primary-500 text-white rounded-full"
                 : ""
             )}
