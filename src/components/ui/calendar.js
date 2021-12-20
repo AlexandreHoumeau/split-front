@@ -10,14 +10,17 @@ const daysOfTheWeek = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 const Calendar = ({ teacherId }) => {
   const [months, setMonths] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
   const [daysInAMonth, setDaysInAMonth] = useState(0);
   const [days, setDays] = useState([]);
   const [firstDay, setFirstDay] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [selectScheldule, setSelectScheldule] = useState(null);
 
   const fetchCourses = async () => {
-    const courses = await api.axios.get(`/v1/scheldule/${teacherId}`);
-
-    console.log(courses);
+    const { courses } = await api.axios.get(`/v1/scheldule/${teacherId}`);
+    setCourses(courses);
   };
 
   useEffect(() => {
@@ -58,26 +61,39 @@ const Calendar = ({ teacherId }) => {
     const startOfTheMonth = moment()
       .month(selectedMonth?.month || Date.now())
       .year(selectedMonth?.year || Date.now())
-      .startOf('month')
+      .startOf("month");
     const array = [];
 
     if (firstDay) {
       const indexFirstDay = daysOfTheWeek.findIndex(
         (day) => day === firstDay.charAt(0).toUpperCase() + firstDay.slice(1)
-      )
+      );
 
       for (let currentIndex = 0; currentIndex < indexFirstDay; currentIndex++) {
         array.push(<div> </div>);
       }
 
       for (let index = 1; index <= daysInAMonth; index++) {
+        const currentDay = moment(startOfTheMonth)
+          .add(index - 1, "days")
+          .format("DD/MM/YYYY");
         array.push(
           <div
+            onClick={() => setSelectedDay(currentDay)}
             className={classNames(
-              "m-2",
-              moment(startOfTheMonth).add(index, 'days').format("DD/MM/YYYY") === moment().format("DD/MM/YYYY")
+              "m-2 font-gibson h-7 w-7 flex justify-center items-center",
+              currentDay === moment().format("DD/MM/YYYY")
                 ? "bg-primary-500 text-white rounded-full"
-                : ""
+                : "",
+              courses.find((course) =>
+                course._schedules.find(
+                  (schedule) =>
+                    moment(schedule.day).format("DD/MM/YYYY") === currentDay
+                )
+              )
+                ? "font-bold cursor-pointer"
+                : "",
+              selectedDay === currentDay ? "text-primary-500" : ""
             )}
           >
             {index}
@@ -86,7 +102,19 @@ const Calendar = ({ teacherId }) => {
       }
       setDays(array);
     }
-  }, [daysInAMonth, firstDay]);
+  }, [daysInAMonth, firstDay, courses, selectedDay]);
+
+  useEffect(() => {
+    const event = courses
+      .map((course) =>
+        course._schedules.filter(
+          (schedule) =>
+            moment(schedule.day).format("DD/MM/YYYY") === selectedDay
+        )
+      )
+      .filter((element) => element.length > 0);
+    setEvents(event[0]);
+  }, [selectedDay]);
 
   return (
     <div className="mb-20 mt-10">
@@ -130,9 +158,31 @@ const Calendar = ({ teacherId }) => {
                 <div key={index}>{day}</div>
               ))}
             </div>
-            <div className="flex mt-10 justify-center">
-              <Button text="RESERVER" type="primary" />
-            </div>
+            {events?.length > 0 && (
+              <>
+                <div className="font-semibold mt-5 font-gibson">
+                  Disponibilités
+                </div>
+                <div className="mt-2 flex">
+                  {events?.map((element) => (
+                    <div
+                      onClick={() => setSelectScheldule(element._id)}
+                      className={classNames(
+                        "p-2 rounded-full cursor-pointer font-gibson",
+                        selectScheldule === element._id
+                          ? "bg-primary-500 text-white"
+                          : ""
+                      )}
+                    >
+                      {moment(element.day).format("hh:mm")}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center">
+                  <Button text="RESERVER" type="primary" />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
