@@ -11,6 +11,7 @@ import Store from "store";
 import Register from "pages/Auth/Register";
 import { ToastContainer } from "react-toastify";
 import DashboardLayout from "pages/Dashboard";
+import ErrorPage from "pages/404";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             path="/register"
             exact
           />
+          <PublicRoute from="/logfin" to="/404" component={ErrorPage} />
           <PrivateRoute component={DashboardLayout} path="/app" />
         </Switch>
       </BrowserRouter>
