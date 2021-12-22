@@ -1,5 +1,5 @@
-import { JWT_TOKEN } from '@config'
-import Api from '@services/api'
+import { JWT_TOKEN } from '../config'
+import Api from '../services/api'
 
 export const loginUser = (userData, from = null) => async (dispatch) => {
   try {
@@ -7,7 +7,7 @@ export const loginUser = (userData, from = null) => async (dispatch) => {
     dispatch({ type: 'LOADING_USER' })
 
     // Login to get jwtToken
-    await Api.axios.post('v4/auth/login', { ...userData, type: 'admin' })
+    await Api.axios.post('/v1/auth/login', { ...userData })
 
     // Fetch user data
     dispatch(getUserData(from))
@@ -22,8 +22,7 @@ export const loginUser = (userData, from = null) => async (dispatch) => {
 export const getUserData = (from = null) => async (dispatch) => {
   try {
     dispatch({ type: 'LOADING_USER' })
-
-    const { user } = await Api.axios.get('v4/auth/me')
+    const { user } = await Api.axios.get('v1/auth/me')
 
     dispatch({
       type: 'SET_USER',
@@ -46,7 +45,7 @@ export const logoutUser = (from = null) => async (dispatch) => {
     localStorage.removeItem(JWT_TOKEN)
     localStorage.removeItem('previousPath') // temporary clean-up for unused var, should be removed later
     
-    await Api.axios.post('v4/auth/logout')
+    await Api.axios.post('v1/auth/logout')
     
     delete Api.axios.defaults.headers.common['Authorization']
 
