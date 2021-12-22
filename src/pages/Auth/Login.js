@@ -3,13 +3,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import api from "services/api";
 import { useHistory } from "react-router";
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import { loginUser } from "store/actions";
+import { connect } from "react-redux";
+import { isLogin } from "utils/isLogin";
 
-const Login = () => {
+const Login = ({ loginUser }) => {
   const [error, setError] = useState(null);
   const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,25 +27,11 @@ const Login = () => {
 
     onSubmit: async (values) => {
       setError(null);
+      await loginUser(values);
 
-      await api.axios
-        .post("/v1/auth/login", values)
-        .then((res) => {
-          if (res) {
-            history.push("/app");
-          } else {
-            notify({ $type: "error", $message: "Une erreur est survenue" });
-            setError("Une erreur est survenue");
-          }
-        })
-        .catch((err) => {
-          notify({ $type: "error", $message: "Une erreur est survenue" });
-          setError("Une erreur est survenue");
-          if (err.response?.data?.$message) {
-            notify({ $type: "error", $message: err.response?.data?.$message });
-            setError(err.response?.data?.$message);
-          }
-        });
+      if (isLogin()) {
+        history.push('/app/home')
+      }
     },
   });
 
@@ -157,7 +146,7 @@ const Login = () => {
             autoplay
             loop
             src="https://assets5.lottiefiles.com/private_files/lf30_j56x43l3.json"
-            className='w-1/2'
+            className="w-1/2"
           >
             <Controls
               visible={false}
@@ -171,4 +160,5 @@ const Login = () => {
   );
 };
 
-export default Login;
+
+export default connect(null, { loginUser })(Login);
