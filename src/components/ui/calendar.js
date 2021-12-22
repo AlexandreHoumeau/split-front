@@ -24,6 +24,16 @@ const Calendar = ({ teacherId }) => {
   };
 
   useEffect(() => {
+    let array = []
+
+    array = courses
+      .filter((course) => course.isActive)
+      .filter((course) => course._schedules?.length)
+    
+    console.log(array)
+  }, [courses])
+
+  useEffect(() => {
     fetchCourses();
   }, []);
 
