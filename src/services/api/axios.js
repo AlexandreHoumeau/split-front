@@ -30,6 +30,7 @@ apiAxios.interceptors.request.use(function (config) {
 });
 
 apiAxios.interceptors.response.use(
+
   function ({ data, config }) {
     const { dispatch } = store
     dispatch({ type: 'CLEAR_ERRORS' })
@@ -38,7 +39,6 @@ apiAxios.interceptors.response.use(
       type: 'SET_AUTH_ERROR',
       payload: null
     })
-
     const { $token, $redirect, $message, $notification } = data;
 
     if ($token) {
@@ -63,7 +63,7 @@ apiAxios.interceptors.response.use(
   },
   function (error) {
     const { dispatch } = store
-
+    console.log(error)
     setTimeout(() => {
       dispatch({ type: 'NO_LOADING' })
     }, 300)
@@ -72,9 +72,14 @@ apiAxios.interceptors.response.use(
       toast.error(error.response?.data?.$message); 
     }
 
-    if (error.response?.data?.$message?.message) {
+    else if (error.response?.data?.$message?.message) {
       toast.error(error.response?.data?.$message.message); 
     }
+
+    else {
+      toast.error('Une erreur est survenue merci de réessayer plus tard')
+    }
+
   }
 );
 
