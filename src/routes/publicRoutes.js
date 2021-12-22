@@ -10,7 +10,6 @@ const PublicRoute = ({component: Component, restricted, ...rest}) => {
                 <Redirect to="/app" />
             : 
             <>
-                <Navbar />
                 <Component {...props} />
             </>
         )} />
