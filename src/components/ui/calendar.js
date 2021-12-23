@@ -19,19 +19,15 @@ const Calendar = ({ teacherId }) => {
   const [selectScheldule, setSelectScheldule] = useState(null);
 
   const fetchCourses = async () => {
-    const { courses } = await api.axios.get(`/v1/scheldule/${teacherId}`);
-    setCourses(courses);
-  };
-
-  useEffect(() => {
-    let array = []
-
-    array = courses
+    const data = await api.axios.get(`/v1/scheldule/${teacherId}`);
+    if (data?.courses) {
+      data.courses
       .filter((course) => course.isActive)
       .filter((course) => course._schedules?.length)
     
-    console.log(array)
-  }, [courses])
+    setCourses(data.courses);
+    }
+  };
 
   useEffect(() => {
     fetchCourses();
@@ -73,6 +69,7 @@ const Calendar = ({ teacherId }) => {
       .year(selectedMonth?.year || Date.now())
       .startOf("month");
     const array = [];
+    const toDay = moment().format('D')
 
     if (firstDay) {
       const indexFirstDay = daysOfTheWeek.findIndex(
@@ -83,10 +80,17 @@ const Calendar = ({ teacherId }) => {
         array.push(<div> </div>);
       }
 
-      for (let index = 1; index <= daysInAMonth; index++) {
+      for (let pastDays = array.length; pastDays <= toDay; pastDays++) {
+        array.push(
+          <div className="italic">{pastDays}</div>
+        )
+      }
+
+      for (let index = toDay; index <= daysInAMonth; index++) {
         const currentDay = moment(startOfTheMonth)
           .add(index - 1, "days")
           .format("DD/MM/YYYY");
+
         array.push(
           <div
             onClick={() => setSelectedDay(currentDay)}
@@ -103,7 +107,8 @@ const Calendar = ({ teacherId }) => {
               )
                 ? "font-bold cursor-pointer"
                 : "",
-              selectedDay === currentDay ? "text-primary-500" : ""
+              courses.find((course) => course._schedules.find((schedule) => schedule.repeat === 'everyDay')) ? 'font-bold cursor-pointer' : '',
+              selectedDay === currentDay ? "text-primary-500" : "",
             )}
           >
             {index}
@@ -152,7 +157,7 @@ const Calendar = ({ teacherId }) => {
           {/* BODY (days) */}
           <div className="w-full bg-white px-11 py-6 rounded-3xl ">
             {/* DAYS OF THE WEEK */}
-            <div className="grid grid-cols-7 gap-4 text-center">
+            <div className="grid grid-cols-7 text-center">
               {daysOfTheWeek.map((day) => (
                 <div
                   key={day}
