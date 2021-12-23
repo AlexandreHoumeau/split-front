@@ -22,10 +22,10 @@ const Calendar = ({ teacherId }) => {
     const data = await api.axios.get(`/v1/scheldule/${teacherId}`);
     if (data?.courses) {
       data.courses
-      .filter((course) => course.isActive)
-      .filter((course) => course._schedules?.length)
-    
-    setCourses(data.courses);
+        .filter((course) => course.isActive)
+        .filter((course) => course._schedules?.length);
+
+      setCourses(data.courses);
     }
   };
 
@@ -69,7 +69,7 @@ const Calendar = ({ teacherId }) => {
       .year(selectedMonth?.year || Date.now())
       .startOf("month");
     const array = [];
-    const toDay = moment().format('D')
+    const toDay = moment().format("D");
 
     if (firstDay) {
       const indexFirstDay = daysOfTheWeek.findIndex(
@@ -82,8 +82,10 @@ const Calendar = ({ teacherId }) => {
 
       for (let pastDays = array.length; pastDays <= toDay; pastDays++) {
         array.push(
-          <div className="italic">{pastDays}</div>
-        )
+          <div className="italic m-2 font-gibson h-7 w-7 flex justify-center items-center">
+            {pastDays}
+          </div>
+        );
       }
 
       for (let index = toDay; index <= daysInAMonth; index++) {
@@ -107,8 +109,14 @@ const Calendar = ({ teacherId }) => {
               )
                 ? "font-bold cursor-pointer"
                 : "",
-              courses.find((course) => course._schedules.find((schedule) => schedule.repeat === 'everyDay')) ? 'font-bold cursor-pointer' : '',
-              selectedDay === currentDay ? "text-primary-500" : "",
+              courses.find((course) =>
+                course._schedules.find(
+                  (schedule) => schedule.repeat === "everyDay"
+                )
+              )
+                ? "font-bold cursor-pointer"
+                : "",
+              selectedDay === currentDay ? "text-primary-500" : ""
             )}
           >
             {index}
@@ -128,6 +136,14 @@ const Calendar = ({ teacherId }) => {
         )
       )
       .filter((element) => element.length > 0);
+
+    const everyDay = courses
+      .map((course) =>
+        course._schedules.filter((scheldule) => scheldule.repeat === "everyDay")
+      )
+      .filter((element) => element.length > 0)[0]
+
+    event[0].push(everyDay)
     setEvents(event[0]);
   }, [selectedDay]);
 
