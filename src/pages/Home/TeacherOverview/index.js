@@ -15,6 +15,7 @@ import {
   StarIcon,
 } from "assets/icons";
 import Calendar from "components/ui/calendar";
+import moment from "moment";
 
 const TeacherOverview = () => {
   const history = useHistory();
@@ -23,10 +24,11 @@ const TeacherOverview = () => {
 
   const [teacher, setTeacher] = useState(null);
   const [showModal, setShowModal] = useState(false)
-
+  const [showBookingModal, setShowBookingModal] = useState(false)
   const goBack = () => {
     history.goBack();
   };
+  const [bookingInformations, setBookingInformations] = useState({})
 
   const fetchTeacher = async () => {
     await api.axios.get(`/v1/teacher/${id}`).then((res) => {
@@ -34,9 +36,28 @@ const TeacherOverview = () => {
     });
   };
 
+  const fetchCourse = async (schelduleId, day) => {
+    const { scheldule, course} = await api.axios.get(`/v1/scheldule/get/${schelduleId}`)
+    setBookingInformations({
+      ...bookingInformations,
+      day,
+      scheldule,
+      course
+    })
+  }
+
   useEffect(() => {
     fetchTeacher();
   }, []);
+
+  async function setBookingModal(schelduleId, day) {
+    if (schelduleId) {
+      fetchCourse(schelduleId, day)
+      setShowBookingModal(true)
+    } else {
+      setShowBookingModal(false)
+    }
+  }
 
   function closeModal() {
     setIsOpen(false);
@@ -164,7 +185,7 @@ const TeacherOverview = () => {
           </div>
         </div>
       ): (
-        <Calendar teacherId={teacher._id} />
+        <Calendar action={(schelduleId, day) => setBookingModal(schelduleId, day)} teacherId={teacher._id} />
       )}
       </div>
 
@@ -213,6 +234,83 @@ const TeacherOverview = () => {
                 <div className="mt-2">
                   <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
                     Sélectionne le type de formation que tu souhaites suivre{" "}
+                  </div>
+                  <ul>
+                    {teacher?.details.map((detail) => (
+                      <div key={detail} className="">
+                        <label className="inline-flex items-center">
+                          <input
+                            type="checkbox"
+                            className="form-checkbox text-primary-500"
+                          />
+                          <span className="ml-2">{detail}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-4 flex justify-center">
+                  <Button
+                    text="CALENDRIER"
+                    type="secondary"
+                    icon="CalendarIcon"
+                    action={() => {
+                      closeModal()
+                      setShowModal(true)
+                    }}
+                  />
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={showBookingModal} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModal}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0" />
+            </Transition.Child>
+
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block py-10 px-24 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <Dialog.Title
+                  as="h3"
+                  className="font-gibson font-semibold text-4xl text-primary text-center"
+                >
+                  Reservation
+                </Dialog.Title>
+                <div className="mt-2">
+                  <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
+                    Date: <span>{moment(bookingInformations?.day).format('YY/MM/DD')}</span>
                   </div>
                   <ul>
                     {teacher?.details.map((detail) => (
