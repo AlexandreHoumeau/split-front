@@ -7,7 +7,7 @@ import classNames from "classnames";
 
 const daysOfTheWeek = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
-const Calendar = ({ teacherId }) => {
+const Calendar = ({ teacherId, action }) => {
   const [months, setMonths] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -128,23 +128,32 @@ const Calendar = ({ teacherId }) => {
   }, [daysInAMonth, firstDay, courses, selectedDay]);
 
   useEffect(() => {
-    const event = courses
+    let event = []
+    const res = []
+    event = courses
       .map((course) =>
         course._schedules.filter(
           (schedule) =>
             moment(schedule.day).format("DD/MM/YYYY") === selectedDay
         )
       )
-      .filter((element) => element.length > 0);
+      .filter((element) => element.length > 0)[0]
 
     const everyDay = courses
       .map((course) =>
         course._schedules.filter((scheldule) => scheldule.repeat === "everyDay")
       )
       .filter((element) => element.length > 0)[0]
+    
+    event?.map((element) => {
+      res.push(element)
+    })
+    everyDay?.map((element) => {
+      console.log(element)
+      res?.push(element)
+    })
 
-    event[0].push(everyDay)
-    setEvents(event[0]);
+    setEvents(res);
   }, [selectedDay]);
 
   return (
@@ -205,12 +214,12 @@ const Calendar = ({ teacherId }) => {
                           : ""
                       )}
                     >
-                      {moment(element.day).format("hh:mm")}
+                      {moment(element.startAt).format("hh:mm")}
                     </div>
                   ))}
                 </div>
                 <div className="flex justify-center">
-                  <Button text="RESERVER" type="primary" />
+                  <Button text="RESERVER" type="primary" action={() => action(selectScheldule, selectedDay)} />
                 </div>
               </>
             )}
