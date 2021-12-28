@@ -53,6 +53,7 @@ const TeacherOverview = () => {
   async function setBookingModal(schelduleId, day) {
     if (schelduleId) {
       fetchCourse(schelduleId, day)
+      document.getElementById("root").style.filter = "blur(5px)";
       setShowBookingModal(true)
     } else {
       setShowBookingModal(false)
@@ -270,7 +271,10 @@ const TeacherOverview = () => {
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModal}
+          onClose={() => {
+            document.getElementById("root").style.filter = "none";
+            setShowBookingModal(false)
+          }}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -309,34 +313,15 @@ const TeacherOverview = () => {
                   Reservation
                 </Dialog.Title>
                 <div className="mt-2">
-                  <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
-                    Date: <span>{moment(bookingInformations?.day).format('YY/MM/DD')}</span>
+                  <div className="text-dark-500 font-gibson  text-lg my-6">
+                    Date: <span className="font-semibold">{bookingInformations?.day}</span>
                   </div>
-                  <ul>
-                    {teacher?.details.map((detail) => (
-                      <div key={detail} className="">
-                        <label className="inline-flex items-center">
-                          <input
-                            type="checkbox"
-                            className="form-checkbox text-primary-500"
-                          />
-                          <span className="ml-2">{detail}</span>
-                        </label>
-                      </div>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-4 flex justify-center">
-                  <Button
-                    text="CALENDRIER"
-                    type="secondary"
-                    icon="CalendarIcon"
-                    action={() => {
-                      closeModal()
-                      setShowModal(true)
-                    }}
-                  />
+                  <div className="text-dark-500 font-gibson text-lg my-6">
+                    Heure: <span className="font-semibold">{moment(bookingInformations?.course?.startAt).format('hh')}H{moment(bookingInformations.course?.startAt).format('mm')}</span>
+                  </div>
+                  <div className="text-dark-500 font-gibson text-lg my-6">
+                    Formateur.rice: <span className="font-semibold">{bookingInformations?.course?._teacher?.firstName} {bookingInformations?.course?._teacher?.lastName}</span>
+                  </div>
                 </div>
               </div>
             </Transition.Child>
