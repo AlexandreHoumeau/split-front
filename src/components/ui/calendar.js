@@ -82,7 +82,7 @@ const Calendar = ({ teacherId, action }) => {
 
       for (let pastDays = array.length; pastDays <= toDay; pastDays++) {
         array.push(
-          <div className="italic m-2 font-gibson h-7 w-7 flex justify-center items-center">
+          <div className="italic m-2 font-gibson h-7 w-7 flex justify-center text-center text-2xl items-center">
             {pastDays}
           </div>
         );
@@ -97,7 +97,7 @@ const Calendar = ({ teacherId, action }) => {
           <div
             onClick={() => setSelectedDay(currentDay)}
             className={classNames(
-              "m-2 font-gibson h-7 w-7 flex justify-center items-center",
+              "m-2 font-gibson h-7 w-7 flex justify-center items-center text-center text-2xl",
               currentDay === moment().format("DD/MM/YYYY")
                 ? "bg-primary-500 text-white rounded-full"
                 : "",
