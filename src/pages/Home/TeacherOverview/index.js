@@ -305,7 +305,7 @@ const TeacherOverview = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block py-10 px-24 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block py-10 px-10 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
                   className="font-gibson font-semibold text-4xl text-primary text-center"
@@ -322,6 +322,21 @@ const TeacherOverview = () => {
                   <div className="text-dark-500 font-gibson text-lg my-6">
                     Formateur.rice: <span className="font-semibold">{bookingInformations?.course?._teacher?.firstName} {bookingInformations?.course?._teacher?.lastName}</span>
                   </div>
+
+                  <div className="text-dark-500 font-gibson text-lg my-6">
+                    Moyen de paiment: <span className="font-semibold">VISA</span>
+                  </div>
+                  <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
+                    5341 **** **** ****
+                  </div>
+                    <div className="flex border-primary-500 border-2 rounded-lg">
+                      <div className="bg-primary-500 cursor-pointer px-11 py-3 text-white font-gibson font-semibold">
+                        VALIDER
+                      </div>
+                      <div className="px-11 py-3 text-dark-500 cursor-pointer font-gibson font-semibold">
+                        ANNULER
+                      </div>
+                    </div>
                 </div>
               </div>
             </Transition.Child>
