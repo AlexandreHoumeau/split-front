@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Settings = () => {
   return (
@@ -6,13 +7,13 @@ const Settings = () => {
       <div className="font-gibson text-2xl mb-14 text-dark-500">
         Ton profil : <span className="font-semibold">Julie Dupont</span>
       </div>
-      <div className="font-gibson text-xl mb-4 font-semibold text-dark-500">
+      <div className="font-gibson text-2xl mb-4 font-semibold text-dark-500">
         Ton compte
       </div>
       <div className="md:grid grid-cols-4  space-x-6">
         <div className="col-span-3">
           <div className="bg-white flex space-x-6 rounded-3xl p-6">
-            <div className="bg-blueGray-100 w-full rounded-3xl py-16 px-10">
+            <Link to={{pathname: 'settings/informations'}} className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Infos personnelles
               </div>
@@ -20,9 +21,9 @@ const Settings = () => {
                 Informations personnelles type identité, adresse mail, numéro de
                 téléphone…
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-blueGray-100 w-full rounded-3xl py-16 px-10">
+            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Notifications
               </div>
@@ -32,23 +33,25 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="font-gibson text-xl mb-4 font-semibold text-dark-500 mt-12">Sécurité et paiement</div>
+          <div className="font-gibson text-2xl mb-4 font-semibold text-dark-500 mt-12">
+            Sécurité et paiement
+          </div>
           <div className="bg-white flex space-x-6 rounded-3xl p-6">
-            <div className="bg-blueGray-100 w-full rounded-3xl py-16 px-10">
+            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
-              Paiements et virements
+                Paiements et virements
               </div>
               <div className="font-gibson text-dark-500 text-xl">
                 Moyen de paiement, mode de paiement et versements…
               </div>
             </div>
 
-            <div className="bg-blueGray-100 w-full rounded-3xl py-16 px-10">
+            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Mot de passe
               </div>
               <div className="font-gibson text-dark-500 text-xl">
-              Mise à jour de mot de passe
+                Mise à jour de mot de passe
               </div>
             </div>
           </div>
