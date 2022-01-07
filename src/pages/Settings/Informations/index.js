@@ -1,4 +1,5 @@
 import Input from "components/settings/input";
+import Button from "components/ui/button";
 import React from "react";
 import { connect } from "react-redux"
 
@@ -24,6 +25,9 @@ const EditInformations = ({ user }) => {
               <Input placeholder="Taper ici" />
               <Input placeholder="Taper ici" />
             </div>
+          </div>
+          <div className="flex justify-center mt-10">
+            <Button type="primary" text="METTRE À JOUR" />
           </div>
         </div>
       </div>
