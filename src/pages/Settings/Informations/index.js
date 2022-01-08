@@ -1,6 +1,7 @@
 import Input from "components/settings/input";
 import Button from "components/ui/button";
 import React from "react";
+import PhoneInput from "react-phone-input-2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { connect } from "react-redux";
@@ -11,7 +12,6 @@ const EditInformations = ({ user }) => {
       email: user.email || "",
       firstName: user.firstName || "",
       lastName: user.lastName || "",
-      birthdate: user.birthdate || "",
       phone: user.phone || "",
     },
     validationSchema: Yup.object({
@@ -20,7 +20,6 @@ const EditInformations = ({ user }) => {
         .required("Ce champ est requis"),
       firstName: Yup.string().required("Ce champ est requis"),
       lastName: Yup.string().required("Ce champ est requis"),
-      birthdate: Yup.date("Merci de renseigner une date"),
       phone: Yup.string().required("Ce champ est requis"),
     }),
 
@@ -51,8 +50,15 @@ const EditInformations = ({ user }) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.firstName}
               />
-              <Input placeholder="Taper ici" />
-              <Input placeholder="Taper ici" />
+              <PhoneInput
+                containerClass="mt-10 w-[100px]"
+                inputClass="w-[100px]"
+                country={"fr"}
+                placeholder="6 51 .."
+                value={formik.values.phone}
+                specialLabel="Ton numéro de téléphone"
+                onChange={formik.handleChange}
+              />
               <Input placeholder="Taper ici" />
             </div>
 
