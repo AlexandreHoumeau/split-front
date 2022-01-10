@@ -23,14 +23,14 @@ const Settings = () => {
               </div>
             </Link>
 
-            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
+            <Link to={{pathname: 'settings/notifications'}} className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Notifications
               </div>
               <div className="font-gibson text-dark-500 text-xl">
                 Préférences de notification, comment tu souhaites être contacté…
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="font-gibson text-2xl mb-4 font-semibold text-dark-500 mt-12">
