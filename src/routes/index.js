@@ -9,7 +9,7 @@ const Search = lazy(() => import('../pages/Home/Search'))
 const TeacherOverview = lazy(() => import('../pages/Home/TeacherOverview'))
 const MyCourses = lazy(() => import('../pages/MyCourses'))
 const EditInformations = lazy(() => import('../pages/Settings/Informations'))
-// // const Buttons = lazy(() => import('../pages/Buttons'))
+const EditNotifications = lazy(() => import('../pages/Settings/Notifications'))
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -58,6 +58,10 @@ const routes = [
     path: '/home/teacher/:id', // the url
     component: TeacherOverview, // view rendered
   },
+  {
+    path: '/settings/notifications',
+    component: EditNotifications
+  }
   // {
   //   path: '/buttons',
   //   component: Buttons,
