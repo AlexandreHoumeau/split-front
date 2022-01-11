@@ -13,7 +13,10 @@ const Settings = () => {
       <div className="md:grid grid-cols-4  space-x-6">
         <div className="col-span-3">
           <div className="bg-white flex space-x-6 rounded-3xl p-6">
-            <Link to={{pathname: 'settings/informations'}} className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
+            <Link
+              to={{ pathname: "settings/informations" }}
+              className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10"
+            >
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Infos personnelles
               </div>
@@ -23,7 +26,10 @@ const Settings = () => {
               </div>
             </Link>
 
-            <Link to={{pathname: 'settings/notifications'}} className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
+            <Link
+              to={{ pathname: "settings/notifications" }}
+              className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10"
+            >
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Notifications
               </div>
@@ -37,23 +43,26 @@ const Settings = () => {
             Sécurité et paiement
           </div>
           <div className="bg-white flex space-x-6 rounded-3xl p-6">
-            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
+            <Link
+              to={{ pathname: "settings/payment" }}
+              className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10"
+            >
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Paiements et virements
               </div>
               <div className="font-gibson text-dark-500 text-xl">
                 Moyen de paiement, mode de paiement et versements…
               </div>
-            </div>
+            </Link>
 
-            <div className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
+            <Link to={{pathname: 'settings/password'}} className="bg-blueGray-100 cursor-pointer w-full rounded-3xl py-16 px-10">
               <div className="font-gibson text-2xl text-primary-500 font-semibold">
                 Mot de passe
               </div>
               <div className="font-gibson text-dark-500 text-xl">
                 Mise à jour de mot de passe
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 
