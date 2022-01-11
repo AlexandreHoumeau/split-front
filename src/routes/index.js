@@ -10,6 +10,8 @@ const TeacherOverview = lazy(() => import('../pages/Home/TeacherOverview'))
 const MyCourses = lazy(() => import('../pages/MyCourses'))
 const EditInformations = lazy(() => import('../pages/Settings/Informations'))
 const EditNotifications = lazy(() => import('../pages/Settings/Notifications'))
+const EditPassword = lazy(() => import('../pages/Settings/Password'))
+const EditPayment = lazy(() => import('../pages/Settings/Payments'))
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -61,15 +63,15 @@ const routes = [
   {
     path: '/settings/notifications',
     component: EditNotifications
-  }
-  // {
-  //   path: '/buttons',
-  //   component: Buttons,
-  // },
-  // {
-  //   path: '/modals',
-  //   component: Modals,
-  // },
+  },
+  {
+    path: '/settings/password',
+    component: EditPassword,
+  },
+  {
+    path: '/settings/payment',
+    component: EditPayment,
+  },
   // {
   //   path: '/tables',
   //   component: Tables,
