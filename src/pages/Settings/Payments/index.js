@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import CheckoutForm from "./NewCard";
 import { useEffect } from "react";
+import { STRIPE_PUBLIC } from "config";
 
 const Payments = () => {
+  console.log(process.env.REACT_APP_STRIPE_PUBLIC)
   let [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

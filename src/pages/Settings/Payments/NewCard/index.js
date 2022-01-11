@@ -10,7 +10,9 @@ import { Spin } from "antd";
 
 import "antd/dist/antd.css";
 import SetupForm from "./SetupForm";
-const stripePromise = loadStripe("pk_test_2PqtCKkCLLwCeRSOrgwpQuPz00eULpLm36");
+import { STRIPE_PUBLIC } from "config";
+
+const stripePromise = loadStripe(STRIPE_PUBLIC);
 
 const CheckoutForm = ({ isOpen, setIsOpen }) => {
   const [options, setOptions] = useState({});
