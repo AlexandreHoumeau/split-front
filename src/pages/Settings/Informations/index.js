@@ -65,6 +65,7 @@ const EditInformations = ({ user, getUserData }) => {
             <div className="grid grid-cols-2 space-x-12">
               <div>
                 <Input
+                  containerClass="mt-10"
                   className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
                   id="firstName"
                   name="firstName"
@@ -88,6 +89,7 @@ const EditInformations = ({ user, getUserData }) => {
 
               <div>
                 <Input
+                  containerClass="mt-10"
                   className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
                   id="lastName"
                   name="lastName"
@@ -98,6 +100,7 @@ const EditInformations = ({ user, getUserData }) => {
                   value={formik.values.lastName}
                 />
                 <Input
+                  containerClass="mt-10"
                   className="w-full font-gibson text-lg py-2 border-b border-dark-300 focus:outline-none focus:border-primary-500"
                   id="email"
                   name="email"

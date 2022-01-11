@@ -1,14 +1,14 @@
-import { ArrowLeftIcon } from "assets/icons";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Switch } from "@headlessui/react";
-import { useState } from "react";
 import classNames from "classnames";
-import Button from "components/ui/button";
 import { connect } from "react-redux";
+
+import { ArrowLeftIcon } from "assets/icons";
+import Button from "components/ui/button";
+
 import api from "services/api";
 import { getUserData } from "store/actions";
-import { useEffect } from "react";
 
 const Notifications = ({ user, getUserData }) => {
   const history = useHistory();
@@ -23,8 +23,8 @@ const Notifications = ({ user, getUserData }) => {
   });
 
   useEffect(() => {
-    getUserData()
-  }, [])
+    getUserData();
+  }, []);
 
   const handleSubmit = () => {
     const newData = {
@@ -32,11 +32,9 @@ const Notifications = ({ user, getUserData }) => {
         ...informations,
       },
     };
-    console.log(informations.smsMessenger)
-    api.axios.put("/v1/auth/me", newData)
-    .then((res) => {
-      getUserData()
-    })
+    api.axios.put("/v1/auth/me", newData).then((res) => {
+      getUserData();
+    });
   };
 
   const renderSwitch = (label, state, value) => (
@@ -121,9 +119,17 @@ const Notifications = ({ user, getUserData }) => {
                 d’avis
               </div>
               <div className="mt-4">
-                <div className="">{renderSwitch("Email", 'emailReminder', informations.emailReminder)}</div>
+                <div className="">
+                  {renderSwitch(
+                    "Email",
+                    "emailReminder",
+                    informations.emailReminder
+                  )}
+                </div>
                 <div className="w-1/3 my-4 h-px bg-gray-400" />
-                <div className="">{renderSwitch("SMS", 'smsReminder', informations.smsReminder)}</div>
+                <div className="">
+                  {renderSwitch("SMS", "smsReminder", informations.smsReminder)}
+                </div>
               </div>
             </div>
 
@@ -142,14 +148,10 @@ const Notifications = ({ user, getUserData }) => {
                     "emailPromote",
                     informations.emailPromote
                   )}
-                  </div>
+                </div>
                 <div className="w-1/3 my-4 h-px bg-gray-400" />
                 <div className="">
-                {renderSwitch(
-                    "SMS",
-                    "smsPromote",
-                    informations.smsPromote
-                  )}
+                  {renderSwitch("SMS", "smsPromote", informations.smsPromote)}
                 </div>
               </div>
             </div>
@@ -183,4 +185,4 @@ const mapStateToProps = (state) => ({
   user: state.Auth.user,
 });
 
-export default connect(mapStateToProps, {getUserData})(Notifications);
+export default connect(mapStateToProps, { getUserData })(Notifications);
