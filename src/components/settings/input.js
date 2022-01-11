@@ -4,22 +4,25 @@ import React from "react";
 const Input = ({
   handleChange,
   disable,
+  containerClass,
   id,
   placeholder,
   handleBlur,
   value,
+  labelClass,
   defaultValue,
   label,
   error,
   type,
 }) => {
   return (
-    <>
+    <div className={containerClass}>
       <div
         className={classNames(
-          "tracking-wide text-sm font-gibson mt-10 font-semibold",
+          "tracking-wide text-sm font-gibson font-semibold",
           error ? "text-red-500" : "text-dark-500",
-          disable ? "text-gray-300" : ""
+          disable ? "text-gray-300" : "",
+          labelClass
         )}
       >
         {label}
@@ -41,7 +44,7 @@ const Input = ({
         value={value}
       />
       {error && <div className="text-red-500 font-gibson">{error}</div>}
-    </>
+    </div>
   );
 };
 
