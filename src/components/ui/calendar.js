@@ -149,7 +149,6 @@ const Calendar = ({ teacherId, action }) => {
       res.push(element)
     })
     everyDay?.map((element) => {
-      console.log(element)
       res?.push(element)
     })
 

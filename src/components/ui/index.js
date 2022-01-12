@@ -1,3 +1,5 @@
 import Button from './button'
 import SchelduleDate from './SchelduleDate'
-export default { Button, SchelduleDate }
+import Avatar from './Avatar'
+
+export default { Button, SchelduleDate, Avatar }
