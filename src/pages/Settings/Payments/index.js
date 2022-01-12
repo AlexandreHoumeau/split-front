@@ -4,10 +4,9 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import CheckoutForm from "./NewCard";
 import { useEffect } from "react";
-import { STRIPE_PUBLIC } from "config";
+import List from "./list";
 
 const Payments = () => {
-  console.log(process.env.REACT_APP_STRIPE_PUBLIC)
   let [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const Payments = () => {
         </div>
       </div>
 
-      <div className="xl:px-32 xl:py-16 px-8 py-4">
+      <div className="xl:px-16 xl:py-8 px-8 py-4">
         <div className="flex justify-between">
           <div className="font-gibson font-semibold text-2xl mb-5 text-dark-500">
             Mode de paiement
@@ -38,11 +37,13 @@ const Payments = () => {
 
         <div className="2xl:grid items-start grid-cols-4 space-x-8">
           <div className="bg-white col-span-3 rounded-3xl p-6">
-            <div></div>
+            <div>
+              <List />
+            </div>
 
             <div className="flex justify-center">
               <Button
-                text="Ajouter un mode de paiment"
+                text="AJOUTER"
                 type="primary"
                 action={() => setIsOpen(true)}
               />
