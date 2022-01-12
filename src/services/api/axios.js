@@ -63,7 +63,6 @@ apiAxios.interceptors.response.use(
   },
   function (error) {
     const { dispatch } = store
-    console.log(error)
     setTimeout(() => {
       dispatch({ type: 'NO_LOADING' })
     }, 300)
