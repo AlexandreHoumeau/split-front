@@ -17,12 +17,10 @@ const MyCourses = () => {
     const { courses } = await api.axios.get("/v1/teacher/courses/list");
     if (courses?.length) {
       setCourses(courses);
-      console.log(courses)
     }
   };
 
   const setCourseActive = async (course) => {
-    console.log(!course.isActive)
     await api.axios.put(`/v1/teacher/courses/${course._id}`, {
       isActive: !course.isActive
     })

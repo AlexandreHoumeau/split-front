@@ -21,7 +21,6 @@ const NewScheldule = ({ course, refreshAction }) => {
         ...date,
         courseId: course._id,
       };
-      console.log('Hello World from submit')
       const data = await api.axios.post("/v1/scheldule/add", values);
       if (data?.$message) {
         setDate({
