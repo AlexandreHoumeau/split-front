@@ -1,11 +1,26 @@
 import Avatar from "components/ui/Avatar";
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
+import api from "services/api";
 
 const Contacts = ({ user }) => {
-  console.log(user);
+  const [contacts, setContacts] = useState([])
+
+  const fetchContacts = async () => {
+    const data = await api.axios.get('/v1/conversation/contact')
+    console.log(data)
+
+    if (data.contacts) {
+      setContacts(data.contacts)
+    }
+  }
+  useEffect(() => {
+    fetchContacts()
+  }, [])
+
   return (
-    <div className="bg-white rounded-xl px-10 py-9 font-gibson">
+    <div className="bg-white shadow-lg rounded-xl px-10 py-9 font-gibson">
       <div className="flex">
         <Avatar picture={user.picture} />
         <div className="ml-3">
@@ -18,6 +33,12 @@ const Contacts = ({ user }) => {
         <div className="text-dark-500 font-semibold">Vos discussions</div>
       </div>
       <div className="bg-gray-300 w-full h-px" />
+
+      <div className="mt-5">
+        {!contacts?.length ? (
+          <div className="italic text-gray-400 text-center">Vous n'avez pas de conversation</div>
+        ): null}
+      </div>
     </div>
   );
 };
