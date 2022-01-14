@@ -46,6 +46,16 @@ const TeacherOverview = () => {
     })
   }
 
+  const contactTeacher = async () => {
+    const data = await api.axios.post('/v1/conversation', {
+      userId: teacher._id
+    })
+
+    if (data.conversation) {
+        history.push(`/app/messenger/${data.conversation._id}`)
+    }
+  }
+
   useEffect(() => {
     fetchTeacher();
   }, []);
@@ -124,7 +134,7 @@ const TeacherOverview = () => {
               type="primary"
               icon="CalendarIcon"
             />
-            <Button text="CONTACTER" type="secondary" icon="MessengerIcon" />
+            <Button text="CONTACTER" action={contactTeacher} type="secondary" icon="MessengerIcon" />
           </div>
         </div>
         
