@@ -45,6 +45,10 @@ const routes = [
     component: Messenger,
   },
   {
+    path: '/messenger/:conversationId',
+    component: Messenger,
+  },
+  {
     path: '/settings',
     component: Settings,
   },
