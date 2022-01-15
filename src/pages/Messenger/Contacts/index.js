@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import api from "services/api";
+import UserCard from "./list";
 
 const Contacts = ({ user }) => {
   const [contacts, setContacts] = useState([])
@@ -37,7 +38,11 @@ const Contacts = ({ user }) => {
       <div className="mt-5">
         {!contacts?.length ? (
           <div className="italic text-gray-400 text-center">Vous n'avez pas de conversation</div>
-        ): null}
+        ): (
+          contacts.map((contact) => (
+            <UserCard contact={contact} />
+          ))
+        )}
       </div>
     </div>
   );
