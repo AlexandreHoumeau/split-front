@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-const Avatar = ({picture, size}) => {
+const Avatar = ({picture, size, displayTag}) => {
   return (
     <div className="relative">
       <img
@@ -13,7 +13,9 @@ const Avatar = ({picture, size}) => {
         src={picture}
         alt="avatar"
       />
-      <div className="w-4 h-4 absolute right-0 bottom-1 ring-white ring bg-primary-500 rounded-full" />
+      {displayTag && (
+        <div className="w-4 h-4 absolute right-0 bottom-1 ring-white ring bg-primary-500 rounded-full" />
+      )}
     </div>
   );
 };
