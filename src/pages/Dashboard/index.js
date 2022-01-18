@@ -16,7 +16,7 @@ const DashboardLayout = ({ getUserData, children, ...rest }) => {
     <div className={`flex h-screen bg-gray-50 dark:bg-gray-900`}>
       {/* // SIDEBAR */}
       <Sidebar />
-      <div className="flex flex-col flex-1 w-full">
+      <div className="flex flex-col flex-1 h-screen w-full">
         <Nav />
         <Main routes={routes} />
       </div>

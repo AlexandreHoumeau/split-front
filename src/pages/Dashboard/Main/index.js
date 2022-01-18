@@ -7,8 +7,8 @@ import ErrorPage from "pages/404";
 
 const Main = ({ routes, isLoading, auth }) => {
   return (
-    <main className="h-full bg-purple-50 overflow-y-auto">
-      <div className="relative grid">
+    <main className="h-screen  bg-purple-50 overflow-y-auto">
+      <div className="relative grid h-full">
         <Suspense fallback={<ThemedSuspense />} />
         <Loader isLoading={isLoading} />
         <Switch>
