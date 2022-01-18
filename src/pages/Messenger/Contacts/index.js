@@ -28,7 +28,7 @@ const Contacts = ({ user }) => {
   }, []);
 
   return (
-    <div className="bg-white flex-1 shadow-lg rounded-xl px-10 py-9 font-gibson">
+    <div className="bg-white max-h-full flex-1 shadow-lg rounded-xl px-10 py-9 font-gibson">
       <div className="flex">
         <Avatar displayTag={true} picture={user.picture} />
         <div className="ml-3">
@@ -51,12 +51,12 @@ const Contacts = ({ user }) => {
           </div>
         ) : (
           contacts.map((contact, index) => (
-            <div onClick={() => selectConversation(contact._id)} key={index}>
+            <div onClick={() => selectConversation(contact.conversationId)} key={index}>
               <div
                 className={classNames(
                   "cursor-pointer p-2 rounded-xl transform duration-300",
-                  selectedConversation === contact._id
-                    ? "bg-gray-100 border border-gray-300"
+                  selectedConversation === contact.conversationId
+                    ? "bg-gray-100 border-gray-300"
                     : ""
                 )}
               >
