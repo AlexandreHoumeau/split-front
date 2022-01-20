@@ -1,19 +1,13 @@
 import { SendIcon } from "assets/icons";
-import { API_DOMAIN } from "config";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import api from "services/api";
-import { io } from "socket.io-client";
+import socket from "services/socket";
 
 const MessagesView = ({ conversationId }) => {
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState([]);
-  const socket = io(API_DOMAIN, {
-    extraHeaders: {
-      Authorization: localStorage.getItem("authToken"),
-    },
-  });
 
   useEffect(() => {
     fetchConversation();
