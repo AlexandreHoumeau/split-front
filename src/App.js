@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import "./index.css";
 import PublicRoute from "./routes/publicRoutes";
 import PrivateRoute from "./routes/privateRoutes";
-
 // PAGES
 import Login from "./pages/Auth/Login";
 import Store from "store";
