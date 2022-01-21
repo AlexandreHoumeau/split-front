@@ -39,20 +39,11 @@ apiAxios.interceptors.response.use(
       type: 'SET_AUTH_ERROR',
       payload: null
     })
-    const { $token, $redirect, $message, $notification } = data;
+    const { $token, $message } = data;
 
     if ($token) {
       localStorage.setItem(JWT_TOKEN, $token);
       apiAxios.defaults.headers.common["Authorization"] = `Bearer: ${$token}`;
-    }
-
-    if ($redirect) {
-      // const { dispatch } = store
-      // dispatch({
-      //   type: 'SET_REDIRECT',
-      //   payload: $redirect
-      // })
-      // dispatch({ type: 'RESET_REDIRECT' })
     }
 
     if ($message) {
