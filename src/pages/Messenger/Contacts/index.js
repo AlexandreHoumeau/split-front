@@ -21,6 +21,9 @@ const Contacts = ({ user }) => {
 
     if (data.contacts) {
       setContacts(data.contacts);
+      if (data.contacts[0]?.conversationId) {
+        selectConversation(data.contacts[0]?.conversationId)
+      }
     }
   };
   useEffect(() => {

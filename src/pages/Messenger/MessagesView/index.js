@@ -1,34 +1,46 @@
 import { SendIcon } from "assets/icons";
+import classNames from "classnames";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { connect } from "react-redux";
 import api from "services/api";
 import socket from "services/socket";
+import manager from "services/socket";
 
-const MessagesView = ({ conversationId }) => {
+const MessagesView = ({ conversationId, user }) => {
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState([]);
 
+  const fetchConversation = async () => {
+    await api.axios
+      .get("/v1/conversation", {
+        params: {
+          conversationId,
+        },
+      })
+      .then((data) => {
+        if (data?.conversation) {
+          setConversation(data.conversation);
+        }
+        const newConversation = data.conversation;
+        socket.on(conversationId, (message) => {
+          console.log(message._sender)
+          if (message._sender === user._id) return;
+          newConversation.messages?.push(message);
+          setConversation(newConversation);
+        });
+      });
+  };
+
   useEffect(() => {
     fetchConversation();
-    socket.on(conversationId, (value) => {
-      const data = {
-        content: value.newMessage
-      }
-      conversation.messages?.push(data)
+    socket.on("users", (users) => {
+      users.forEach((user) => {
+        console.log(user)
+      });
     });
   }, [conversationId]);
-
-  const fetchConversation = async () => {
-    const data = await api.axios.get("/v1/conversation", {
-      params: {
-        conversationId,
-      },
-    });
-    if (data.conversation) {
-      setConversation(data.conversation);
-    }
-  };
 
   const submitMessage = (e) => {
     e.preventDefault();
@@ -36,17 +48,14 @@ const MessagesView = ({ conversationId }) => {
 
     const value = {
       conversationId,
-      newMessage,
+      content: newMessage,
+      _sender: user._id,
     };
-    // api.axios.post(`${API_DOMAIN}/v1/conversation/message`, value)
-    // .finally(() => {
-    // socket.on("connection", () => {
-    //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    // });
 
-    socket.emit('chat', value);
+    conversation.messages.push(value);
 
-    setNewMessage('');
+    socket.emit("chat", value);
+    setNewMessage("");
     // })
   };
 
@@ -54,16 +63,47 @@ const MessagesView = ({ conversationId }) => {
     <div className="bg-white flex flex-col flex-grow h-full shadow-lg rounded-xl font-gibson">
       <div className="bg-gray-50 rounded-t-xl py-5 px-5">
         <div className="text-dark-500 text-xl font-semibold">
-          Alexandre Houmeau
+          Mettre le nom de la personne
         </div>
       </div>
 
       <div className="h-full mb-8">
         {/* MESSAGE VIEW */}
         <div className="h-full p-5 flex-1">
-          {conversation?.messages?.map((message) => (
-            <div key={message._id}>{message.content}</div>
-          ))}
+          {conversation?.messages?.map((message, index) =>
+            message._sender === user._id ? (
+              <div className="flex justify-end" key={index}>
+                <div
+                  className={classNames(
+                    "bg-primary m-px w-max text-white rounded-l-lg p-3",
+                    conversation.messages[index - 1]?._sender !== user._id
+                      ? "rounded-t-lg"
+                      : "",
+                    conversation.messages[index + 1]?._sender !== user._id
+                      ? "rounded-b-lg"
+                      : ""
+                  )}
+                >
+                  <div>{message.content}</div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-start" key={index}>
+                <div
+                  className={classNames(
+                    "bg-secondary m-px w-max text-white rounded-r-lg p-3",
+                    conversation.messages[index - 1]?._sender !== user._id
+                      ? "rounded-b-lg"
+                      : "",
+                    conversation.messages[index + 1]?._sender !== user._id
+                      ? "rounded-t-lg"
+                      : ""
+                  )}
+                >
+                  <div>{message.content}</div>
+                </div>
+              </div>            )
+          )}
         </div>
       </div>
       <div className="mt-auto px-8 mb-8">
@@ -91,4 +131,8 @@ const MessagesView = ({ conversationId }) => {
   );
 };
 
-export default MessagesView;
+const mapStateToProps = (state) => ({
+  user: state.Auth.user,
+});
+
+export default connect(mapStateToProps)(MessagesView);
