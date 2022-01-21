@@ -1,3 +1,5 @@
+import socket from 'services/socket'
+import manager from 'services/socket'
 import { JWT_TOKEN } from '../config'
 import Api from '../services/api'
 
@@ -23,6 +25,11 @@ export const getUserData = (from = null) => async (dispatch) => {
   try {
     dispatch({ type: 'LOADING_USER' })
     const { user } = await Api.axios.get('v1/auth/me')
+
+    if (user) {
+      socket.auth = { username: user._id }
+      socket.connect()
+    }
 
     dispatch({
       type: 'SET_USER',
