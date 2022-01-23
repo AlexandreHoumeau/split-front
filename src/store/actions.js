@@ -27,8 +27,9 @@ export const getUserData = (from = null) => async (dispatch) => {
     const { user } = await Api.axios.get('v1/auth/me')
 
     if (user) {
-      socket.auth = { username: user._id }
+      socket.auth = { id: user._id }
       socket.connect()
+      console.log(socket)
     }
 
     dispatch({
