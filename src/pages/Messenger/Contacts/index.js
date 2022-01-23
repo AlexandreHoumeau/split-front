@@ -5,6 +5,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import api from "services/api";
+import socket from "services/socket";
 import UserCard from "./list";
 
 const Contacts = ({ user }) => {
@@ -16,6 +17,7 @@ const Contacts = ({ user }) => {
     setSelectedConversation(conversationId);
     history.push(`/app/messenger/${conversationId}`);
   };
+
   const fetchContacts = async () => {
     const data = await api.axios.get("/v1/conversation/contact");
 
@@ -26,8 +28,24 @@ const Contacts = ({ user }) => {
       }
     }
   };
+
+  // const onlineUser = () => {
+  //   socket.on("users", (user) => {
+  //     const foundUser = contacts.filter((contact) => contact._id === user.id)
+  //     if (foundUser[0]) {
+  //       foundUser[0].status = 'online'
+  //       setContacts([
+  //         ...contacts,
+  //         foundUser[0]
+  //       ])
+  //       console.log(contacts)
+  //     }
+  //   })
+  // }
+
   useEffect(() => {
     fetchContacts();
+    // onlineUser()
   }, []);
 
   return (
