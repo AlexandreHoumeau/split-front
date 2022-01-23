@@ -23,9 +23,17 @@ const MessagesView = ({ conversationId, user }) => {
         if (data?.conversation) {
           setConversation(data.conversation);
         }
-        const newConversation = data.conversation;
-        socket.on(conversationId, (message) => {
-          console.log(message._sender)
+
+        const newConversation = data.conversation
+
+        // socket.on(conversationId, (message) => {
+        //   if (message._sender === user._id) return;
+        //   newConversation.messages?.push(message);
+        //   setConversation(newConversation);
+        // });
+
+        socket.on('new_msg', (message) => {
+          console.log(message)
           if (message._sender === user._id) return;
           newConversation.messages?.push(message);
           setConversation(newConversation);
@@ -35,11 +43,6 @@ const MessagesView = ({ conversationId, user }) => {
 
   useEffect(() => {
     fetchConversation();
-    socket.on("users", (users) => {
-      users.forEach((user) => {
-        console.log(user)
-      });
-    });
   }, [conversationId]);
 
   const submitMessage = (e) => {
