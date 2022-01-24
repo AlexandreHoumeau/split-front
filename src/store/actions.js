@@ -1,6 +1,6 @@
 import socket from 'services/socket'
 import manager from 'services/socket'
-import { JWT_TOKEN } from '../config'
+import { API_DOMAIN, JWT_TOKEN } from '../config'
 import Api from '../services/api'
 
 export const loginUser = (userData, from = null) => async (dispatch) => {
