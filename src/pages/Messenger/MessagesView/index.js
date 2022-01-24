@@ -1,48 +1,44 @@
-import { SendIcon } from "assets/icons";
+import React, { useState, useEffect } from "react";
+
 import classNames from "classnames";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import { connect } from "react-redux";
+
+import { SendIcon } from "assets/icons";
+
 import api from "services/api";
 import socket from "services/socket";
-import manager from "services/socket";
 
 const MessagesView = ({ conversationId, user }) => {
   const [newMessage, setNewMessage] = useState("");
-  const [conversation, setConversation] = useState([]);
-
+  const [conversation, setConversation] = useState({})
+  const [] = useState(null)
   const fetchConversation = async () => {
-    await api.axios
-      .get("/v1/conversation", {
-        params: {
-          conversationId,
-        },
-      })
-      .then((data) => {
-        if (data?.conversation) {
-          setConversation(data.conversation);
-        }
-
-        const newConversation = data.conversation
-
-        // socket.on(conversationId, (message) => {
-        //   if (message._sender === user._id) return;
-        //   newConversation.messages?.push(message);
-        //   setConversation(newConversation);
-        // });
-
-        socket.on('new_msg', (message) => {
-          console.log(message)
-          if (message._sender === user._id) return;
-          newConversation.messages?.push(message);
-          setConversation(newConversation);
-        });
-      });
+    const data = await api.axios.get('/v1/conversation', {
+      params: {
+        conversationId
+      }
+    })
+    if (data.conversation) {
+      setConversation(data.conversation)
+      connectSocket(data.conversation)
+    }
   };
+
+  const connectSocket = (data) => {
+    console.log('Hello World from Hellllllllllllllllllllllllllllllllllllllllllllllllllllllll')
+    const newConversation = data
+
+    socket.on(conversationId, (message) => {
+      console.log(message)
+      if (message._sender === user._id) return;
+      newConversation.messages?.push(message);
+      setConversation(newConversation);
+    });
+  }
 
   useEffect(() => {
     fetchConversation();
+    connectSocket()
   }, [conversationId]);
 
   const submitMessage = (e) => {
