@@ -10,35 +10,31 @@ import socket from "services/socket";
 
 const MessagesView = ({ conversationId, user }) => {
   const [newMessage, setNewMessage] = useState("");
-  const [conversation, setConversation] = useState({})
-  const [] = useState(null)
+  const [conversation, setConversation] = useState({});
+  const [messages, setMessages] = useState([])
+
   const fetchConversation = async () => {
-    const data = await api.axios.get('/v1/conversation', {
+    const { conversation } = await api.axios.get("/v1/conversation", {
       params: {
-        conversationId
-      }
-    })
-    if (data.conversation) {
-      setConversation(data.conversation)
-      connectSocket(data.conversation)
+        conversationId,
+      },
+    });
+    if (conversation) {
+      setConversation(conversation);
+      setMessages(conversation.messages)
+      console.log(conversation)
     }
   };
 
-  const connectSocket = (data) => {
-    console.log('Hello World from Hellllllllllllllllllllllllllllllllllllllllllllllllllllllll')
-    const newConversation = data
-
+  useEffect(() => {
     socket.on(conversationId, (message) => {
-      console.log(message)
       if (message._sender === user._id) return;
-      newConversation.messages?.push(message);
-      setConversation(newConversation);
+      setMessages((oldArray) => [...oldArray, message]);
     });
-  }
+  }, []);
 
   useEffect(() => {
     fetchConversation();
-    connectSocket()
   }, [conversationId]);
 
   const submitMessage = (e) => {
@@ -69,7 +65,7 @@ const MessagesView = ({ conversationId, user }) => {
       <div className="h-full mb-8">
         {/* MESSAGE VIEW */}
         <div className="h-full p-5 flex-1">
-          {conversation?.messages?.map((message, index) =>
+          {messages?.map((message, index) =>
             message._sender === user._id ? (
               <div className="flex justify-end" key={index}>
                 <div
@@ -101,7 +97,8 @@ const MessagesView = ({ conversationId, user }) => {
                 >
                   <div>{message.content}</div>
                 </div>
-              </div>            )
+              </div>
+            )
           )}
         </div>
       </div>
