@@ -7,11 +7,12 @@ import { SendIcon } from "assets/icons";
 
 import api from "services/api";
 import socket from "services/socket";
+import moment from "moment";
 
 const MessagesView = ({ conversationId, user }) => {
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState({});
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
 
   const fetchConversation = async () => {
     const { conversation } = await api.axios.get("/v1/conversation", {
@@ -21,8 +22,7 @@ const MessagesView = ({ conversationId, user }) => {
     });
     if (conversation) {
       setConversation(conversation);
-      setMessages(conversation.messages)
-      console.log(conversation)
+      setMessages(conversation.messages);
     }
   };
 
@@ -67,36 +67,52 @@ const MessagesView = ({ conversationId, user }) => {
         <div className="h-full p-5 flex-1">
           {messages?.map((message, index) =>
             message._sender === user._id ? (
-              <div className="flex justify-end" key={index}>
-                <div
-                  className={classNames(
-                    "bg-primary m-px w-max text-white rounded-l-lg p-3",
-                    conversation.messages[index - 1]?._sender !== user._id
-                      ? "rounded-t-lg"
-                      : "",
-                    conversation.messages[index + 1]?._sender !== user._id
-                      ? "rounded-b-lg"
-                      : ""
-                  )}
-                >
-                  <div>{message.content}</div>
+              <div key={index}>
+                <div className="flex justify-end">
+                  <div
+                    className={classNames(
+                      "bg-primary m-px w-max text-white rounded-l-lg p-3",
+                      messages[index - 1]?._sender !== user._id
+                        ? "rounded-t-lg"
+                        : "",
+                      messages[index + 1]?._sender !== user._id
+                        ? "rounded-b-lg"
+                        : ""
+                    )}
+                  >
+                    <div>{message.content}</div>
+                  </div>
                 </div>
+                {messages[index + 1]?._sender !== user._id ? (
+                  <div className="text-right text-xs font-semibold text-gray-400 mr-1 mt-1">
+                    {moment(message._sendtAt).format('hh:mm')}
+                  </div>
+                ) : null}
               </div>
             ) : (
-              <div className="flex justify-start" key={index}>
-                <div
-                  className={classNames(
-                    "bg-secondary m-px w-max text-white rounded-r-lg p-3",
-                    conversation.messages[index - 1]?._sender !== user._id
-                      ? "rounded-b-lg"
-                      : "",
-                    conversation.messages[index + 1]?._sender !== user._id
-                      ? "rounded-t-lg"
-                      : ""
-                  )}
-                >
-                  <div>{message.content}</div>
+              <div key={index}>
+                <div className="flex justify-start" key={index}>
+                  <div
+                    className={classNames(
+                      "bg-secondary m-px w-max text-white rounded-r-lg p-3",
+                      messages[index - 1]?._sender !==
+                        conversation._users.find((u) => u !== user._id)
+                        ? "rounded-t-lg"
+                        : "",
+                      messages[index + 1]?._sender !==
+                        conversation._users.find((u) => u !== user._id)
+                        ? "rounded-b-lg"
+                        : ""
+                    )}
+                  >
+                    <div>{message.content}</div>
+                  </div>
                 </div>
+                {messages[index + 1]?._sender !== conversation._users.find((u) => u !== user._id) ? (
+                  <div className="text-left text-xs font-semibold text-gray-400 ml-1 mt-1">
+                    {moment(message._sendtAt).format('hh:mm')}
+                  </div>
+                ) : null}
               </div>
             )
           )}
