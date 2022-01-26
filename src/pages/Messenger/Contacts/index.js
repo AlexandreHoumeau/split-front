@@ -33,7 +33,7 @@ const Contacts = ({ user }) => {
     socket.on("users", (user) => {
       const foundUser = contacts.find((contact) => contact._id === user.id)
       if (foundUser) {
-        foundUser.status = 'online'
+        foundUser.online = true
         setContacts(oldArray => [...oldArray, foundUser]);
         console.log(contacts)
       }
