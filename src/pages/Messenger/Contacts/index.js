@@ -24,25 +24,29 @@ const Contacts = ({ user }) => {
     if (data.contacts) {
       setContacts(data.contacts);
       if (data.contacts[0]?.conversationId) {
-        selectConversation(data.contacts[0]?.conversationId)
+        selectConversation(data.contacts[0]?.conversationId);
       }
     }
   };
 
   const onlineUser = () => {
     socket.on("users", (user) => {
-      const foundUser = contacts.find((contact) => contact._id === user.id)
-      if (foundUser) {
-        foundUser.online = true
-        setContacts(oldArray => [...oldArray, foundUser]);
-        console.log(contacts)
+      if (contacts.map((c) => c._id === user.id)) {
+
+         const tmp = contacts.map((c) => {
+          if (c._id === user.id) {
+            c.online = true
+          }
+        });
+        console.log(tmp)
+        // setContacts(tmp);
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     fetchContacts();
-    onlineUser()
+    onlineUser();
   }, []);
 
   return (
@@ -69,7 +73,10 @@ const Contacts = ({ user }) => {
           </div>
         ) : (
           contacts.map((contact, index) => (
-            <div onClick={() => selectConversation(contact.conversationId)} key={index}>
+            <div
+              onClick={() => selectConversation(contact.conversationId)}
+              key={index}
+            >
               <div
                 className={classNames(
                   "cursor-pointer p-2 rounded-xl transform duration-300",
