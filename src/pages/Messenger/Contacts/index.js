@@ -29,23 +29,20 @@ const Contacts = ({ user }) => {
     }
   };
 
-  // const onlineUser = () => {
-  //   socket.on("users", (user) => {
-  //     const foundUser = contacts.filter((contact) => contact._id === user.id)
-  //     if (foundUser[0]) {
-  //       foundUser[0].status = 'online'
-  //       setContacts([
-  //         ...contacts,
-  //         foundUser[0]
-  //       ])
-  //       console.log(contacts)
-  //     }
-  //   })
-  // }
+  const onlineUser = () => {
+    socket.on("users", (user) => {
+      const foundUser = contacts.find((contact) => contact._id === user.id)
+      if (foundUser) {
+        foundUser.status = 'online'
+        setContacts(oldArray => [...oldArray, foundUser]);
+        console.log(contacts)
+      }
+    })
+  }
 
   useEffect(() => {
     fetchContacts();
-    // onlineUser()
+    onlineUser()
   }, []);
 
   return (
