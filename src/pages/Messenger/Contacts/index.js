@@ -16,6 +16,18 @@ const Contacts = ({ user }) => {
   const selectConversation = (conversationId) => {
     setSelectedConversation(conversationId);
     history.push(`/app/messenger/${conversationId}`);
+    
+    const foundContact = contacts.find((c) => c.conversationId === conversationId)
+
+    if (foundContact) {
+      let newArr = [...contacts]
+      setContacts([])
+      if (!foundContact?.lastMessage?.seenBy?.includes(user._id)) {
+        const indexConversation = contacts.findIndex((c) => c.conversationId === conversationId)
+        newArr[indexConversation]?.lastMessage?.seenBy?.push(user._id)
+        setContacts(newArr)
+      }
+    }
   };
 
   const fetchContacts = async () => {
@@ -38,8 +50,6 @@ const Contacts = ({ user }) => {
             c.online = true
           }
         });
-        console.log(tmp)
-        // setContacts(tmp);
       }
     });
   };
@@ -75,7 +85,7 @@ const Contacts = ({ user }) => {
           contacts.map((contact, index) => (
             <div
               onClick={() => selectConversation(contact.conversationId)}
-              key={index}
+              key={contact._id}
             >
               <div
                 className={classNames(
