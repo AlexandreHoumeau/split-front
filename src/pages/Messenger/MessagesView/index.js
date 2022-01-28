@@ -62,9 +62,9 @@ const MessagesView = ({ conversationId, user }) => {
         </div>
       </div>
 
-      <div className="h-full mb-8">
+      <div style={{ height: "69vh"}} className="overflow-y-auto">
         {/* MESSAGE VIEW */}
-        <div className="h-full p-5 flex-1">
+        <div className="p-5 bg-white">
           {messages?.map((message, index) =>
             message._sender === user._id ? (
               <div key={index}>
