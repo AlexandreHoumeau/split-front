@@ -23,12 +23,13 @@ const TeacherOverview = () => {
   const { id } = useParams();
 
   const [teacher, setTeacher] = useState(null);
-  const [showModal, setShowModal] = useState(false)
-  const [showBookingModal, setShowBookingModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const goBack = () => {
     history.goBack();
   };
-  const [bookingInformations, setBookingInformations] = useState({})
+  const [bookingInformations, setBookingInformations] = useState({});
+  const [payment, setPayment] = useState(null);
 
   const fetchTeacher = async () => {
     await api.axios.get(`/v1/teacher/${id}`).then((res) => {
@@ -37,23 +38,43 @@ const TeacherOverview = () => {
   };
 
   const fetchCourse = async (schelduleId, day) => {
-    const { scheldule, course} = await api.axios.get(`/v1/scheldule/get/${schelduleId}`)
+    const { scheldule, course } = await api.axios.get(
+      `/v1/scheldule/get/${schelduleId}`
+    );
     setBookingInformations({
       ...bookingInformations,
       day,
       scheldule,
-      course
-    })
-  }
+      course,
+    });
+  };
+
+  const getPaymentsMethod = async () => {
+    const res = await api.axios.get("/v1/payment");
+
+    if (res?.paymentsMethod?.data[0]) {
+      setPayment(res.paymentsMethod.data[0]);
+    }
+  };
 
   const contactTeacher = async () => {
-    const data = await api.axios.post('/v1/conversation', {
-      userId: teacher._id
-    })
+    const data = await api.axios.post("/v1/conversation", {
+      userId: teacher._id,
+    });
 
     if (data.conversation) {
-        history.push(`/app/messenger/${data.conversation._id}`)
+      history.push(`/app/messenger/${data.conversation._id}`);
     }
+  };
+
+  const bookLesson = async (informations) => {
+    await api.axios.post('/v1/course/book', {
+      _startAt: informations.scheldule.day,
+      _teacher: informations.course._teacher._id ,
+      _course: informations.course._id,
+      _schedule: informations.scheldule._id
+    })
+    closeModal()
   }
 
   useEffect(() => {
@@ -62,16 +83,18 @@ const TeacherOverview = () => {
 
   async function setBookingModal(schelduleId, day) {
     if (schelduleId) {
-      fetchCourse(schelduleId, day)
+      fetchCourse(schelduleId, day);
+      getPaymentsMethod();
       document.getElementById("root").style.filter = "blur(5px)";
-      setShowBookingModal(true)
+      setShowBookingModal(true);
     } else {
-      setShowBookingModal(false)
+      setShowBookingModal(false);
     }
   }
 
   function closeModal() {
     setIsOpen(false);
+    setShowBookingModal(false)
     document.getElementById("root").style.filter = "none";
   }
 
@@ -134,70 +157,78 @@ const TeacherOverview = () => {
               type="primary"
               icon="CalendarIcon"
             />
-            <Button text="CONTACTER" action={contactTeacher} type="secondary" icon="MessengerIcon" />
+            <Button
+              text="CONTACTER"
+              action={contactTeacher}
+              type="secondary"
+              icon="MessengerIcon"
+            />
           </div>
         </div>
-        
-      {!showModal ? (
+
+        {!showModal ? (
           <div className="flex mt-10">
-          <div className="m-5 p-5 w-2/6 ">
-            <h1 className="text-dark-500 text-2xl font-bold ml-2 mb-2">
-              Profil
-            </h1>
-            <div className="bg-white p-5 shadow-lg rounded-4xl">
-              <div className="flex">
-                <CheckMarkIcon className="mr-2" />
-                <p className="font-gibson text-xl mb-2 text-dark-500">
-                  Profil vérifié
-                </p>
+            <div className="m-5 p-5 w-2/6 ">
+              <h1 className="text-dark-500 text-2xl font-bold ml-2 mb-2">
+                Profil
+              </h1>
+              <div className="bg-white p-5 shadow-lg rounded-4xl">
+                <div className="flex">
+                  <CheckMarkIcon className="mr-2" />
+                  <p className="font-gibson text-xl mb-2 text-dark-500">
+                    Profil vérifié
+                  </p>
+                </div>
+                <div className="flex">
+                  <SmileIcon className="mr-2" />
+                  <p className="font-gibson text-xl mb-2 text-dark-500">
+                    Membre depuis 4 mois
+                  </p>
+                </div>
+                <div className="flex">
+                  <StarIcon className="mr-2" />
+                  <p className="font-gibson text-xl mb-2 text-dark-500">
+                    25 avis
+                  </p>
+                </div>
+
+                <div className="flex">
+                  <ComputerIcon className="mr-2" />
+                  <p className="font-gibson text-xl mb-2 text-dark-500">
+                    Formation en visio
+                  </p>
+                </div>
+                <div className="flex">
+                  <MentorIcon className="mr-2" />
+                  <p className="font-gibson text-xl text-dark-500">
+                    Formation indivudelle
+                  </p>
+                </div>
               </div>
-              <div className="flex">
-                <SmileIcon className="mr-2" />
-                <p className="font-gibson text-xl mb-2 text-dark-500">
-                  Membre depuis 4 mois
-                </p>
-              </div>
-              <div className="flex">
-                <StarIcon className="mr-2" />
-                <p className="font-gibson text-xl mb-2 text-dark-500">
-                  25 avis
-                </p>
+            </div>
+
+            <div className="m-5 p-5 w-3/5 ">
+              <h1 className="text-dark-500 text-2xl font-bold ml-2 mb-2">
+                À propos
+              </h1>
+              <div className="bg-white p-7 shadow-lg rounded-4xl">
+                <p>{teacher?.about}</p>
               </div>
 
-              <div className="flex">
-                <ComputerIcon className="mr-2" />
-                <p className="font-gibson text-xl mb-2 text-dark-500">
-                  Formation en visio
-                </p>
-              </div>
-              <div className="flex">
-                <MentorIcon className="mr-2" />
-                <p className="font-gibson text-xl text-dark-500">
-                  Formation indivudelle
-                </p>
+              <h1 className="text-dark-500 mt-10 text-2xl font-bold ml-2 mb-2">
+                Experience
+              </h1>
+              <div className="bg-white p-7 shadow-lg rounded-4xl">
+                <p>{teacher?.about}</p>
               </div>
             </div>
           </div>
-
-          <div className="m-5 p-5 w-3/5 ">
-            <h1 className="text-dark-500 text-2xl font-bold ml-2 mb-2">
-              À propos
-            </h1>
-            <div className="bg-white p-7 shadow-lg rounded-4xl">
-              <p>{teacher?.about}</p>
-            </div>
-
-            <h1 className="text-dark-500 mt-10 text-2xl font-bold ml-2 mb-2">
-              Experience
-            </h1>
-            <div className="bg-white p-7 shadow-lg rounded-4xl">
-              <p>{teacher?.about}</p>
-            </div>
-          </div>
-        </div>
-      ): (
-        <Calendar action={(schelduleId, day) => setBookingModal(schelduleId, day)} teacherId={teacher._id} />
-      )}
+        ) : (
+          <Calendar
+            action={(schelduleId, day) => setBookingModal(schelduleId, day)}
+            teacherId={teacher._id}
+          />
+        )}
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -267,8 +298,8 @@ const TeacherOverview = () => {
                     type="secondary"
                     icon="CalendarIcon"
                     action={() => {
-                      closeModal()
-                      setShowModal(true)
+                      closeModal();
+                      setShowModal(true);
                     }}
                   />
                 </div>
@@ -283,7 +314,7 @@ const TeacherOverview = () => {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => {
             document.getElementById("root").style.filter = "none";
-            setShowBookingModal(false)
+            setShowBookingModal(false);
           }}
         >
           <div className="min-h-screen px-4 text-center">
@@ -324,29 +355,51 @@ const TeacherOverview = () => {
                 </Dialog.Title>
                 <div className="mt-2">
                   <div className="text-dark-500 font-gibson  text-lg my-6">
-                    Date: <span className="font-semibold">{bookingInformations?.day}</span>
+                    Date:{" "}
+                    <span className="font-semibold">
+                      {bookingInformations?.day}
+                    </span>
                   </div>
                   <div className="text-dark-500 font-gibson text-lg my-6">
-                    Heure: <span className="font-semibold">{moment(bookingInformations?.course?.startAt).format('hh')}H{moment(bookingInformations.course?.startAt).format('mm')}</span>
+                    Heure:{" "}
+                    <span className="font-semibold">
+                      {moment(bookingInformations?.scheldule?.startAt).format(
+                        "hh"
+                      )}
+                      H
+                      {moment(bookingInformations.scheldule?.startAt).format(
+                        "mm"
+                      )}
+                    </span>
                   </div>
                   <div className="text-dark-500 font-gibson text-lg my-6">
-                    Formateur.rice: <span className="font-semibold">{bookingInformations?.course?._teacher?.firstName} {bookingInformations?.course?._teacher?.lastName}</span>
+                    Formateur.rice:{" "}
+                    <span className="font-semibold">
+                      {bookingInformations?.course?._teacher?.firstName}{" "}
+                      {bookingInformations?.course?._teacher?.lastName}
+                    </span>
                   </div>
-
-                  <div className="text-dark-500 font-gibson text-lg my-6">
-                    Moyen de paiment: <span className="font-semibold">VISA</span>
-                  </div>
-                  <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
-                    5341 **** **** ****
-                  </div>
-                    <div className="flex border-primary-500 border-2 rounded-lg">
-                      <div className="bg-primary-500 cursor-pointer px-11 py-3 text-white font-gibson font-semibold">
-                        VALIDER
+                  {payment ? (
+                    <div>
+                      <div className="text-dark-500 font-gibson text-lg my-6">
+                        Moyen de paiment:{" "}
+                        <span className="font-semibold">
+                          {payment?.card?.brand?.toUpperCase()}
+                        </span>
                       </div>
-                      <div className="px-11 py-3 text-dark-500 cursor-pointer font-gibson font-semibold">
-                        ANNULER
+                      <div className="text-dark-500 font-gibson font-semibold text-lg my-6">
+                        **** **** {payment?.card?.last4}
+                      </div>
+                      <div className="flex border-primary-500 border-2 rounded-lg">
+                        <div onClick={() => bookLesson(bookingInformations)} className="bg-primary-500 cursor-pointer px-11 py-3 text-white font-gibson font-semibold">
+                          VALIDER
+                        </div>
+                        <div onClick={() => closeModal()} className="px-11 py-3 text-dark-500 cursor-pointer font-gibson font-semibold">
+                          ANNULER
+                        </div>
                       </div>
                     </div>
+                  ) : <div className="font-gibson font-semibold text-red-500">Merci de renseigner un moyen de paiment avant de pouvoir continuer</div>}
                 </div>
               </div>
             </Transition.Child>
