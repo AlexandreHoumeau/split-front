@@ -38,7 +38,7 @@ const Sidebar = () => {
               <NavLink
                 exact
                 to={route.path}
-                className="inline-flex font-gibson text-gray-600 items-center w-full text-sm font-semibold transition-colors duration-300"
+                className="inline-flex font-gibson hover:text-gray-500 text-gray-600 items-center w-full text-sm font-semibold transition-colors duration-300"
                 activeClassName="text-primary-500"
               >
                 <Route path={route.path} exact={route.exact}>
@@ -65,9 +65,9 @@ const Sidebar = () => {
         className="flex justify-center items-center cursor-pointer mt-auto mb-10"
       >
         <Icon className="w-5 h-5" aria-hidden="true" icon="LogoutIcon" />
-        <p className="text-center ml-2 font-gibson text-dark-500 font-semibold text-xl">
+        <div className="text-center ml-2 font-gibson text-dark-500 font-semibold text-xl">
           Déconnexion
-        </p>
+        </div>
       </div>
     </aside>
   );
