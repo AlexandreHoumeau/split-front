@@ -70,7 +70,8 @@ const Calendar = ({ teacherId, action }) => {
       .startOf("month");
     const array = [];
     const toDay = moment().format("D");
-
+    const isTodayMonth = moment().format('MM') === startOfTheMonth.format('MM')
+    
     if (firstDay) {
       const indexFirstDay = daysOfTheWeek.findIndex(
         (day) => day === firstDay.charAt(0).toUpperCase() + firstDay.slice(1)
@@ -80,15 +81,18 @@ const Calendar = ({ teacherId, action }) => {
         array.push(<div> </div>);
       }
 
-      for (let pastDays = array.length; pastDays <= toDay; pastDays++) {
-        array.push(
-          <div className="italic m-2 font-gibson h-7 w-7 flex justify-center text-center text-2xl items-center">
-            {pastDays}
-          </div>
-        );
-      }
+      if (isTodayMonth) {
+  
+        for (let pastDays = array.length; pastDays <= toDay; pastDays++) {
+          array.push(
+            <div className="italic m-2 font-gibson h-7 w-7 flex justify-center text-center text-2xl items-center">
+              {pastDays}
+            </div>
+          );
+        }
+      } 
 
-      for (let index = toDay; index <= daysInAMonth; index++) {
+      for (let index = isTodayMonth ? toDay : 1; index <= daysInAMonth; index++) {
         const currentDay = moment(startOfTheMonth)
           .add(index - 1, "days")
           .format("DD/MM/YYYY");
