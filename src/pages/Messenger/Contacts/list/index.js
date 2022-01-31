@@ -10,8 +10,7 @@ const UserCard = ({ contact, user }) => {
 
   useEffect(() => {
     setCard(contact)
-    console.log('Update card')
-  }, [contact, contact?.lastMessage])
+  }, [contact])
 
   return (
     <div>
