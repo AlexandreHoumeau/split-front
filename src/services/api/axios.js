@@ -47,7 +47,16 @@ apiAxios.interceptors.response.use(
     }
 
     if ($message) {
-      toast.success($message); 
+      toast.success($message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+        
     }
 
     return data;
@@ -59,11 +68,28 @@ apiAxios.interceptors.response.use(
     }, 300)
     
     if (error.response?.data?.$message) {
-      toast.error(error.response?.data?.$message); 
+      toast.error(error.response?.data?.$message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }
 
     else if (error.response?.data?.$message?.message) {
-      toast.error(error.response?.data?.$message.message); 
+      // toast.error(error.response?.data?.$message.message); 
+      toast.error(error.response?.data?.$message.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }
 
     else {
