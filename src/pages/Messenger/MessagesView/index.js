@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import classNames from "classnames";
 import { connect } from "react-redux";
@@ -13,6 +13,11 @@ const MessagesView = ({ conversationId, user }) => {
   const [newMessage, setNewMessage] = useState("");
   const [conversation, setConversation] = useState({});
   const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const fetchConversation = async () => {
     const { conversation } = await api.axios.get("/v1/conversation", {
@@ -25,10 +30,19 @@ const MessagesView = ({ conversationId, user }) => {
       setMessages(conversation.messages);
     }
   };
+  
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages]);
+
 
   useEffect(() => {
     socket.on(conversationId, (message) => {
-      if (message._sender === user._id) return;
+      if (
+        message._sender === user._id ||
+        message.conversationId !== conversationId
+      )
+        return;
       setMessages((oldArray) => [...oldArray, message]);
     });
   }, []);
@@ -62,7 +76,7 @@ const MessagesView = ({ conversationId, user }) => {
         </div>
       </div>
 
-      <div style={{ height: "69vh"}} className="overflow-y-auto">
+      <div style={{ height: "69vh" }} className="overflow-y-auto">
         {/* MESSAGE VIEW */}
         <div className="p-5 bg-white">
           {messages?.map((message, index) =>
@@ -85,7 +99,7 @@ const MessagesView = ({ conversationId, user }) => {
                 </div>
                 {messages[index + 1]?._sender !== user._id ? (
                   <div className="text-right text-xs font-semibold text-gray-400 mr-1 mt-1">
-                    {moment(message._sendtAt).format('hh:mm')}
+                    {moment(message._sendtAt).format("hh:mm")}
                   </div>
                 ) : null}
               </div>
@@ -108,14 +122,16 @@ const MessagesView = ({ conversationId, user }) => {
                     <div>{message.content}</div>
                   </div>
                 </div>
-                {messages[index + 1]?._sender !== conversation._users.find((u) => u !== user._id) ? (
+                {messages[index + 1]?._sender !==
+                conversation._users.find((u) => u !== user._id) ? (
                   <div className="text-left text-xs font-semibold text-gray-400 ml-1 mt-1">
-                    {moment(message._sendtAt).format('hh:mm')}
+                    {moment(message._sendtAt).format("hh:mm")}
                   </div>
                 ) : null}
               </div>
             )
           )}
+          <div ref={messagesEndRef} />
         </div>
       </div>
       <div className="mt-auto px-8 mb-8">
