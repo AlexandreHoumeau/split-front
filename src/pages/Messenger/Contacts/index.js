@@ -1,12 +1,12 @@
-import classNames from "classnames";
-import Avatar from "components/ui/Avatar";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
+import classNames from "classnames";
+
 import api from "services/api";
 import socket from "services/socket";
-import UserCard from "./list";
+
+import Avatar from "components/ui/Avatar";
 
 const Contacts = ({ user }) => {
   const [contacts, setContacts] = useState([]);
@@ -16,16 +16,18 @@ const Contacts = ({ user }) => {
   const selectConversation = (conversationId) => {
     setSelectedConversation(conversationId);
     history.push(`/app/messenger/${conversationId}`);
-    
-    const foundContact = contacts.find((c) => c.conversationId === conversationId)
 
+    const foundContact = contacts.find(
+      (c) => c.conversationId === conversationId
+    );
     if (foundContact) {
-      let newArr = [...contacts]
-      setContacts([])
+      let newArr = [...contacts];
       if (!foundContact?.lastMessage?.seenBy?.includes(user._id)) {
-        const indexConversation = contacts.findIndex((c) => c.conversationId === conversationId)
-        newArr[indexConversation]?.lastMessage?.seenBy?.push(user._id)
-        setContacts(newArr)
+        const indexConversation = contacts.findIndex(
+          (c) => c.conversationId === conversationId
+        );
+        newArr[indexConversation]?.lastMessage?.seenBy?.push(user._id);
+        setContacts([...newArr]);
       }
     }
   };
@@ -41,22 +43,31 @@ const Contacts = ({ user }) => {
     }
   };
 
-  const onlineUser = () => {
-    socket.on("users", (user) => {
-      if (contacts.map((c) => c._id === user.id)) {
+  useEffect(() => {
+    contacts.forEach((contact) => {
+      socket.on(contact.conversationId, (msg, seenBy) => {
 
-         const tmp = contacts.map((c) => {
-          if (c._id === user.id) {
-            c.online = true
+        const foundContact = contacts.find(
+          (c) => c.conversationId === contact.conversationId
+        );
+        if (foundContact) {
+          let newArr = [...contacts];
+          const indexConversation = contacts.findIndex(
+            (c) => c.conversationId === contact.conversationId
+          );
+          newArr[indexConversation].lastMessage = {
+            content: msg.content,
+            seenBy: seenBy,
           }
-        });
-      }
+          setContacts([...newArr])
+        }
+      });
     });
-  };
+  }, [contacts]);
 
   useEffect(() => {
     fetchContacts();
-    onlineUser();
+    // onlineUser();
   }, []);
 
   return (
@@ -95,7 +106,38 @@ const Contacts = ({ user }) => {
                     : ""
                 )}
               >
-                <UserCard contact={contact} />
+                {/* <UserCard contact={contact} seenBy={contact.lastMessage.seenBy} /> */}
+                <div>
+                  <div className="flex">
+                    <Avatar
+                      displayTag={false}
+                      size="14"
+                      picture={contact?.picture}
+                    />
+                    <div className="ml-2 font-gibson">
+                      <div className="font-semibold text-lg text-dark-500">
+                        {contact?.firstName}
+                      </div>
+                      {contact?.lastMessage ? (
+                        <div
+                          className={classNames(
+                            contact?.lastMessage.seenBy.includes(user._id)
+                              ? "text-gray-400"
+                              : "font-semibold",
+                            "text-sm"
+                          )}
+                        >
+                          {contact?.lastMessage.content.substring(0, 20)}...
+                        </div>
+                      ) : (
+                        <div className="text-gray-400 italic">
+                          Aucun message envoyé
+                        </div>
+                      )}
+                    </div>
+                    <div>{contact?.lastMessage?._sentAt}</div>
+                  </div>
+                </div>
               </div>
               {index + 1 < contacts.length && (
                 <div className="bg-gray-300 my-3 w-full h-px" />
