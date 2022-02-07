@@ -140,12 +140,13 @@ const MessagesView = ({ conversationId, user }) => {
           className="border flex border-gray-200 px-3 py-2 rounded-full"
         >
           <input
+            type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="w-full select-none outline-none"
             placeholder="Ecrivez votre message ici"
           />
-          <div className="">
+          <div className=".submit-button">
             <div
               onClick={submitMessage}
               className="bg-primary-500 cursor-pointer px-3 py-2 rounded-full"
