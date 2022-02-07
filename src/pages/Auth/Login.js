@@ -114,6 +114,7 @@ const Login = ({ loginUser }) => {
                 </div>
                 <div className="mt-10">
                   <button
+                    type="submit"
                     className={`${
                       !(formik.isValid && formik.dirty)
                         ? "bg-primary-300"
