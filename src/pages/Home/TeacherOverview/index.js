@@ -68,8 +68,15 @@ const TeacherOverview = () => {
   };
 
   const bookLesson = async (informations) => {
+    const _startAt = moment(bookingInformations.day, 'DD-MM-YYYY')
+
+    _startAt.set({
+      'hour': moment(bookingInformations.scheldule.startAt).format('hh'),
+      'minute': moment(bookingInformations.scheldule.startAt).format('mm')
+    })
+
     await api.axios.post('/v1/course/book', {
-      _startAt: informations.scheldule.day,
+      _startAt,
       _teacher: informations.course._teacher._id ,
       _course: informations.course._id,
       _schedule: informations.scheldule._id
@@ -83,6 +90,7 @@ const TeacherOverview = () => {
 
   async function setBookingModal(schelduleId, day) {
     if (schelduleId) {
+      console.log(day)
       fetchCourse(schelduleId, day);
       getPaymentsMethod();
       document.getElementById("root").style.filter = "blur(5px)";
