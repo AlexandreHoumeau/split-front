@@ -3,14 +3,26 @@ import React, { useEffect, useState } from "react";
 import api from "services/api";
 import RectangleOrange from "assets/images/rectangle_orange.png";
 import { useHistory } from "react-router";
+import ReviewCard from "./ReviewCard";
 // import RectangleBlue from 'assets/images/rectangle_blue.png'
 
 const Home = () => {
   const [teachers, setTeachers] = useState([]);
-  const history = useHistory()
+  const [needToReview, setNeedToReview] = useState();
+
+  const history = useHistory();
+
   useEffect(() => {
     fetchTeachers();
+    fetchBookedCourses();
   }, []);
+
+  const fetchBookedCourses = async () => {
+    try {
+      const { bookedCourse } = await api.axios.get("/v1/course/book");
+      setNeedToReview(bookedCourse[0]);
+    } catch (error) {}
+  };
 
   const fetchTeachers = async () => {
     await api.axios.get("/v1/teacher/list").then((res) => {
@@ -21,11 +33,16 @@ const Home = () => {
   };
 
   const teacherOverView = (teacherId) => {
-    history.push(`home/teacher/${teacherId}`)
-  }
+    history.push(`home/teacher/${teacherId}`);
+  };
 
   return (
     <div className="mt-5 relative px-10">
+      {needToReview && (
+        <div className="flex justify-center">
+          <ReviewCard bookedCourse={needToReview} />
+        </div>
+      )}
       {teachers.marketing?.length > 0 && (
         <div className="relative">
           <div className="flex justify-between">
