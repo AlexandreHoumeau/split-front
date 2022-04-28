@@ -12,6 +12,7 @@ const EditInformations = lazy(() => import('../pages/Settings/Informations'))
 const EditNotifications = lazy(() => import('../pages/Settings/Notifications'))
 const EditPassword = lazy(() => import('../pages/Settings/Password'))
 const EditPayment = lazy(() => import('../pages/Settings/Payments'))
+const Review = lazy(() => import('../pages/Review'))
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -47,6 +48,10 @@ const routes = [
   {
     path: '/messenger/:conversationId',
     component: Messenger,
+  },
+  {
+    path: '/review/:courseId',
+    component: Review,
   },
   {
     path: '/settings',
