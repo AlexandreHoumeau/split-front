@@ -15,7 +15,7 @@ const FurtherCourses = ({ furtherCourses = [] }) => {
               <div className="grid grid-cols-6">
                 <div className="text-secondary col-span-1">
                   <div>{moment(course._createdAt).format("hh:mm")}</div>
-                  <div className="mt-5">
+                  <div className="mt-10">
                     {moment(course._createdAt).add("hours", 1).format("hh:mm")}
                   </div>
                 </div>
