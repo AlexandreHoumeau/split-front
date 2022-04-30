@@ -1,6 +1,5 @@
 import socket from 'services/socket'
-import manager from 'services/socket'
-import { API_DOMAIN, JWT_TOKEN } from '../config'
+import { JWT_TOKEN } from '../config'
 import Api from '../services/api'
 
 export const loginUser = (userData, from = null) => async (dispatch) => {
@@ -29,7 +28,6 @@ export const getUserData = (from = null) => async (dispatch) => {
     if (user) {
       socket.auth = { id: user._id }
       socket.connect()
-      console.log(socket)
     }
 
     dispatch({
