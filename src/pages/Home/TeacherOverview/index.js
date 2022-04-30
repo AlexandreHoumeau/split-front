@@ -90,7 +90,6 @@ const TeacherOverview = () => {
 
   async function setBookingModal(schelduleId, day) {
     if (schelduleId) {
-      console.log(day)
       fetchCourse(schelduleId, day);
       getPaymentsMethod();
       document.getElementById("root").style.filter = "blur(5px)";
