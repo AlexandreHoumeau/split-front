@@ -1,5 +1,6 @@
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
+import "antd/dist/antd.css";
 
 import "./index.css";
 import PublicRoute from "./routes/publicRoutes";
