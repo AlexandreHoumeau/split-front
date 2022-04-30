@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import { SearchIcon, BellIcon, MenuIcon, CrossIcon } from "assets/icons";
-import { connect } from "react-redux";
-import api from "services/api";
 import { setSearch } from "actions/search.action";
-import { useEffect } from "react";
+import { CrossIcon, MenuIcon, SearchIcon } from "assets/icons";
+import Avatar from "components/ui/Avatar";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router";
+import api from "services/api";
 
-function Nav({ searchData, setSearch }) {
+function Nav({ searchData, setSearch, user }) {
   // const { mode, toggleMode } = useContext(WindmillContext)
   // const { toggleSidebar } = useContext(SidebarContext)
   const [keyword, setKeyword] = useState("");
@@ -100,38 +100,16 @@ function Nav({ searchData, setSearch }) {
             </div>
           </form>
         </div>
-        <ul className="flex items-center flex-shrink-0 space-x-6">
-          {/* <!-- Notifications menu --> */}
-          <li className="relative">
-            <button
-              className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-              onClick={handleNotificationsClick}
-              aria-label="Notifications"
-              aria-haspopup="true"
-            >
-              <BellIcon className="w-5 h-5" aria-hidden="true" />
-              {/* <!-- Notification badge --> */}
-              <span
-                aria-hidden="true"
-                className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
-              ></span>
-            </button>
-          </li>
-          {/* <!-- Profile menu --> */}
-          <li className="relative">
-            <button
-              className="rounded-full focus:shadow-outline-purple focus:outline-none"
-              onClick={handleProfileClick}
-              aria-label="Account"
-              aria-haspopup="true"
-            ></button>
-          </li>
-        </ul>
+        <div className="flex items-center space-x-2">
+          <div className="font-gibson font-semibold">{user.firstName}</div>
+          <Avatar size={10} picture={user.picture} />
+        </div>
       </div>
     </header>
   );
 }
 const mapStateToProps = (state) => ({
   searchData: state.search,
+  user: state.Auth.user
 });
 export default connect(mapStateToProps, { setSearch })(Nav);
