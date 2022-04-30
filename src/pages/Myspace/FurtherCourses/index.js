@@ -1,9 +1,7 @@
-import Avatar from "components/ui/Avatar";
 import moment from "moment";
 import React from "react";
 
 const FurtherCourses = ({ furtherCourses = [] }) => {
-  console.log(furtherCourses);
   return (
     <div className="bg-gray-50 font-gibson rounded-xl p-5 space-y-2">
       {furtherCourses?.length ? (
