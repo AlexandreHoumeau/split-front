@@ -12,7 +12,6 @@ const PersonalInformation = ({ user, reviews = [] }) => {
     );
   }, [reviews]);
 
-  console.log(user);
   return (
     <div className="bg-gray-50 font-gibson rounded-xl p-5 space-y-2">
       <div>
