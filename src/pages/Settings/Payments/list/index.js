@@ -1,4 +1,3 @@
-import { TrashIcon } from "assets/icons";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import api from "services/api";
@@ -15,7 +14,6 @@ const List = () => {
 
     if (res) {
       setPayments(res.paymentsMethod.data)
-      console.log(payments)
     }
   };
 
