@@ -11,7 +11,6 @@ import NewScheldule from "./NewScheldule";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState(null);
-  const [enabled, setEnabled] = useState(false);
 
   const getCourses = async () => {
     const { courses } = await api.axios.get("/v1/teacher/courses/list");
@@ -34,8 +33,9 @@ const MyCourses = () => {
   }, []);
 
   return (
-    <div className="lg:grid grid-cols-7 gap-4 ">
-      <div className="col-span-5 my-7 mx-16">
+    <div className="l ">
+
+      <div className="col-span-6 my-9 mx-16">
         <div className="flex items-center justify-between">
           <div className="font-gibson font-semibold text-2xl text-dark-500">
             Les cours que tu proposes
@@ -131,7 +131,6 @@ const MyCourses = () => {
           ))}
         </div>
       </div>
-      <div className="bg-white hidden lg:block h-screen col-span-2 shadow-lg"></div>
     </div>
   );
 };
