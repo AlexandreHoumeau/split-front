@@ -37,22 +37,28 @@ function Nav({ searchData, setSearch, user }) {
 
   const search = async (e) => {
     e.preventDefault();
-    if (keyword) {
-      await api.axios
-        .get("/v1/search", {
-          params: { keyword },
-        })
-        .then((res) => {
-          if (res) {
-            history.push("/app/home/search");
-            const newData = {
-              keyword,
-              result: res.teachers,
-            };
-            setSearch(newData);
-          }
-        });
-    }
+    try {
+      const { search } = await api.axios.get('/v1/search', {
+        params: { keyword }
+      })
+      console.log(search)
+    } catch (error) {}
+    // if (keyword) {
+    //   await api.axios
+    //     .get("/v1/search", {
+    //       params: { keyword },
+    //     })
+    //     .then((res) => {
+    //       if (res) {
+    //         history.push("/app/home/search");
+    //         const newData = {
+    //           keyword,
+    //           result: res.teachers,
+    //         };
+    //         setSearch(newData);
+    //       }
+    //     });
+    // }
   };
   return (
     <header className="z-40 py-8 bg-white shadow-lg dark:bg-gray-800">

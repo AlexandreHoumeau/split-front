@@ -28,7 +28,7 @@ const Sidebar = () => {
       <div className="py-4 text-gray-500 dark:text-gray-400">
         <a
           className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-          href="/app/accueil"
+          href="/app/home"
         >
           <img alt="logo split" className="w-16 ml-6" src={logo} />
         </a>
